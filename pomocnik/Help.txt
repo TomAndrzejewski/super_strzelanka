@@ -1,0 +1,1 @@
+projekt bazuje na: https://www.rastertek.com/dx11tut16.html z przerobkami pod najnowsze API
