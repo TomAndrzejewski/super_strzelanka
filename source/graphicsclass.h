@@ -4,6 +4,8 @@
 #ifndef _GRAPHICSCLASS_H_
 #define _GRAPHICSCLASS_H_
 
+#include <vector>
+
 
 /////////////
 // GLOBALS //
@@ -25,6 +27,7 @@ const float SCREEN_NEAR = 0.1f;
 #include "lightclass.h"
 #include "modellistclass.h"
 #include "frustumclass.h"
+#include "EnemyClass.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,6 +54,7 @@ private:
 	LightClass* m_Light;
 	ModelListClass* m_ModelList;
 	FrustumClass* m_Frustum;
+	vector<EnemyClass> m_EnemyList;
 };
 
 #endif

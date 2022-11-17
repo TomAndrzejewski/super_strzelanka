@@ -1,22 +1,2 @@
-﻿  cameraclass.cpp
-  d3dclass.cpp
-  fontclass.cpp
-  fontshaderclass.cpp
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\fontshaderclass.cpp(298,42): warning C4244: '=': conversion from 'SIZE_T' to 'unsigned long', possible loss of data
-  frustumclass.cpp
-  graphicsclass.cpp
-  inputclass.cpp
-  lightclass.cpp
-  lightshaderclass.cpp
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\lightshaderclass.cpp(309,42): warning C4244: '=': conversion from 'SIZE_T' to 'unsigned long', possible loss of data
-  main.cpp
-  modelclass.cpp
-  modellistclass.cpp
-  positionclass.cpp
-  systemclass.cpp
-  textclass.cpp
-  textureclass.cpp
-  timerclass.cpp
-  Generating Code...
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\textureclass.cpp(58): warning C4715: 'TextureClass::Initialize': not all control paths return a value
+﻿  graphicsclass.cpp
   super_strzelanka.vcxproj -> C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\x64\Debug\super_strzelanka.exe

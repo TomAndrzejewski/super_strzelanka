@@ -19,8 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\BBoxCollisionClass.cpp" />
     <ClCompile Include="..\source\cameraclass.cpp" />
     <ClCompile Include="..\source\d3dclass.cpp" />
+    <ClCompile Include="..\source\EnemyClass.cpp" />
+    <ClCompile Include="..\source\EnemyModelClass.cpp" />
     <ClCompile Include="..\source\fontclass.cpp" />
     <ClCompile Include="..\source\fontshaderclass.cpp" />
     <ClCompile Include="..\source\frustumclass.cpp" />
@@ -38,9 +41,12 @@
     <ClCompile Include="..\source\timerclass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\BBoxCollisionClass.h" />
     <ClInclude Include="..\source\cameraclass.h" />
     <ClInclude Include="..\source\CommonDefs.h" />
     <ClInclude Include="..\source\d3dclass.h" />
+    <ClInclude Include="..\source\EnemyClass.h" />
+    <ClInclude Include="..\source\EnemyModelClass.h" />
     <ClInclude Include="..\source\fontclass.h" />
     <ClInclude Include="..\source\fontshaderclass.h" />
     <ClInclude Include="..\source\frustumclass.h" />

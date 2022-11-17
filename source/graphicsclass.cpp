@@ -3,6 +3,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "graphicsclass.h"
 #include "CommonDefs.h"
+#include <SimpleMath.h>
+#include "BBoxCollisionClass.h"
+
+using namespace DirectX::SimpleMath;
 
 
 GraphicsClass::GraphicsClass()
@@ -84,13 +88,39 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the model object.
-	WCHAR textureFileName[] = SPHERE_TEXTURE_FILENAME;
-	result = m_Model->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), textureFileName, SPHERE_MODEL_FILENAME);
+	WCHAR textureFileName[] = CUBE_TEXTURE_FILENAME;
+	result = m_Model->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), textureFileName, CUBE_MODEL_FILENAME);
 	if(!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
+
+	// Initialize list of simple cube enemies
+	XMFLOAT3 position(0.0f, 0.0f, 0.0f);
+	XMFLOAT3 extends[SIMPLE_CUBE_BBOX_NUMBER];
+	for (int i = 0; i < SIMPLE_CUBE_BBOX_NUMBER; i++)
+	{
+		// Read bbox needed data
+		if (BBoxCollisionClass::ReadBBoxFromFile(simpleCubeBBoxFiles[i].c_str(), extends[i]) == false) { return false; }
+	}
+
+	for (int i = 0; i < SIMPLE_CUBE_ENEMY_NUMBER; i++)
+	{
+		EnemyClass Enemy;
+
+		// Init model
+		Enemy.Initialize(m_Model);
+
+		// Add all needed collisionBBoxes
+		for (int j = 0; j < SIMPLE_CUBE_BBOX_NUMBER; j++)
+		{
+			Enemy.AddCollisionBBox(position, extends[j]);
+		}
+
+		m_EnemyList.push_back(Enemy);
+	}
+	
 
 	// Create the light shader object.
 	m_LightShader = new LightShaderClass;
@@ -115,7 +145,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the light object.
-	m_Light->SetDirection(0.0f, 0.0f, 1.0f);
+	m_Light->SetDirection(0.3f, 0.0f, 1.0f);
 
 	// Create the model list object.
 	m_ModelList = new ModelListClass;
@@ -256,7 +286,7 @@ bool GraphicsClass::Render()
 	renderCount = 0;
 
 	// Go through all the models and render them only if they can be seen by the camera view.
-	for(index=0; index<modelCount; index++)
+	for(index=0; index < ENEMY_NUMBER; index++)
 	{
 		// Get the position and color of the sphere model at this index.
 		m_ModelList->GetData(index, positionX, positionY, positionZ, color);
@@ -268,17 +298,36 @@ bool GraphicsClass::Render()
 		renderModel = m_Frustum->CheckSphere(positionX, positionY, positionZ, radius);
 
 		// If it can be seen then render it, if not skip this model and check the next sphere.
+		EnemyClass* pEnemy = &m_EnemyList.at(index);
 		if(renderModel)
 		{
 			// Move the model to the location it should be rendered at.
 			worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 
+			
+			pEnemy->ChangeCollisionModelPos(XMFLOAT3(positionX, positionY, positionZ));
+			bool collisionOccurs = pEnemy->CheckIfEnemyIsHit(m_Camera->GetPositionVector(), m_Camera->GetLookAtVector());
+			if (collisionOccurs)
+			{
+				color = XMFLOAT4(0.0f, 0.0f, 1.0f, 0.0f);
+				//pEnemy->EnemyGotHit();
+				//// Reset to the original world matrix.
+				//m_D3D->GetWorldMatrix(worldMatrix);
+				//continue;
+			}
+			else
+			{
+				color = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.0f);
+				//pEnemy->PlayerRestarted();
+				//pEnemy->PlayerStarted();
+			}
+			
 			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-			m_Model->Render(m_D3D->GetDeviceContext());
+			pEnemy->GetModel()->Render(m_D3D->GetDeviceContext());
 
 			// Render the model using the light shader.
-			m_LightShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, 
-								  m_Model->GetTexture(), m_Light->GetDirection(), color);
+			m_LightShader->Render(m_D3D->GetDeviceContext(), pEnemy->GetModel()->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+								pEnemy->GetModel()->GetTexture(), m_Light->GetDirection(), color);
 
 			// Reset to the original world matrix.
 			m_D3D->GetWorldMatrix(worldMatrix);

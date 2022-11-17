@@ -34,7 +34,7 @@ void FrustumClass::ConstructFrustum(float screenDepth, XMFLOAT4X4 projectionMatr
 	projectionMatrix._43 = -r * zMinimum;
 
 	// Create the frustum matrix from the view matrix and updated projection matrix.
-	XMMATRIX pMatrix((const float*)& projectionMatrix.m);
+	XMMATRIX pMatrix((const float*)&projectionMatrix.m);
 	XMMATRIX vMatrix((const float*)&viewMatrix.m);
 	matrix = XMMatrixMultiply(vMatrix, pMatrix);
 	XMStoreFloat4x4(&matrix4x4, matrix);

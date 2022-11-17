@@ -25,11 +25,15 @@ public:
 	void SetPosition(float, float, float);
 	void SetRotation(float, float, float);
 
+	XMVECTOR GetPositionVector();
+	XMVECTOR GetLookAtVector();
+
 	void Render();
 	void GetViewMatrix(XMMATRIX&);
 
 private:
 	XMMATRIX m_viewMatrix;
+	XMVECTOR m_positionVector, m_lookAtVector;
 	float m_positionX, m_positionY, m_positionZ;
 	float m_rotationX, m_rotationY, m_rotationZ;
 };

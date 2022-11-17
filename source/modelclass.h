@@ -10,6 +10,7 @@
 //////////////
 #include <d3d11.h>
 #include <directxmath.h>
+#include <SimpleMath.h>
 using namespace DirectX;
 #include <fstream>
 using namespace std;
@@ -69,6 +70,7 @@ private:
 	int m_vertexCount, m_indexCount;
 	TextureClass* m_Texture;
 	ModelType* m_model;
+	BoundingBox m_collisionModel;
 };
 
 #endif
