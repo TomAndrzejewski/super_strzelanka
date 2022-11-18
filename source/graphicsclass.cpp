@@ -210,13 +210,13 @@ void GraphicsClass::Shutdown()
 }
 
 
-bool GraphicsClass::Frame(float rotationY)
+bool GraphicsClass::Frame(float rotationY, float rotationX, float positionZ, float positionX)
 {
 	// Set the position of the camera.
-	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
+	m_Camera->SetPosition(positionX, 0.0f, positionZ);
 
 	// Set the rotation of the camera.
-	m_Camera->SetRotation(0.0f, rotationY, 0.0f);
+	m_Camera->SetRotation(rotationX, rotationY, 0.0f);
 
 	return true;
 }
