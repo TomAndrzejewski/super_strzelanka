@@ -180,7 +180,9 @@ void SystemClass::Run()
 bool SystemClass::Frame()
 {
 	bool keyDown, result;
-	float rotationY;
+	float rotationY, rotationX;
+	float positionZ, positionX;
+	int mouseDeltaX, mouseDeltaY;
 
 
 	// Update the system stats.
@@ -196,18 +198,29 @@ bool SystemClass::Frame()
 	// Set the frame time for calculating the updated position.
 	m_Position->SetFrameTime(m_Timer->GetTime());
 
-	// Check if the left or right arrow key has been pressed, if so rotate the camera accordingly.
-	keyDown = m_Input->IsLeftArrowPressed();
-	m_Position->TurnLeft(keyDown);
+	m_Input->GetMouseDelta(mouseDeltaX, mouseDeltaY);
+	m_Position->RotateY(mouseDeltaX);
+	m_Position->RotateX(mouseDeltaY);
 
-	keyDown = m_Input->IsRightArrowPressed();
-	m_Position->TurnRight(keyDown);
+	keyDown = m_Input->IsWPressed();
+	m_Position->MoveForward(keyDown);
+
+	keyDown = m_Input->IsSPressed();
+	m_Position->MoveBackward(keyDown);
+
+	keyDown = m_Input->IsAPressed();
+	m_Position->MoveLeft(keyDown);
+
+	keyDown = m_Input->IsDPressed();
+	m_Position->MoveRight(keyDown);
 
 	// Get the current view point rotation.
-	m_Position->GetRotation(rotationY);
+	m_Position->GetRotation(rotationY, rotationX);
+
+	m_Position->GetPosition(positionZ, positionX);
 
 	// Do the frame processing for the graphics object.
-	result = m_Graphics->Frame(rotationY);
+	result = m_Graphics->Frame(rotationY, rotationX, positionZ, positionX);
 	if(!result)
 	{
 		return false;

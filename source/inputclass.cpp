@@ -35,6 +35,9 @@ bool InputClass::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int
 	m_mouseX = 0;
 	m_mouseY = 0;
 
+	m_prevMouseX = 0;
+	m_prevMouseY = 0;
+
 	// Initialize the main direct input interface.
 	result = DirectInput8Create(hinstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_directInput, NULL);
 	if(FAILED(result))
@@ -207,16 +210,12 @@ bool InputClass::ReadMouse()
 
 void InputClass::ProcessInput()
 {
+	m_prevMouseX = m_mouseX;
+	m_prevMouseY = m_mouseY;
+
 	// Update the location of the mouse cursor based on the change of the mouse location during the frame.
 	m_mouseX += m_mouseState.lX;
 	m_mouseY += m_mouseState.lY;
-
-	// Ensure the mouse location doesn't exceed the screen width or height.
-	if(m_mouseX < 0)  { m_mouseX = 0; }
-	if(m_mouseY < 0)  { m_mouseY = 0; }
-	
-	if(m_mouseX > m_screenWidth)  { m_mouseX = m_screenWidth; }
-	if(m_mouseY > m_screenHeight) { m_mouseY = m_screenHeight; }
 	
 	return;
 }
@@ -234,9 +233,9 @@ bool InputClass::IsEscapePressed()
 }
 
 
-bool InputClass::IsLeftArrowPressed()
+bool InputClass::IsAPressed()
 {
-	if(m_keyboardState[DIK_LEFT] & 0x80)
+	if(m_keyboardState[DIK_A] & 0x80)
 	{
 		return true;
 	}
@@ -245,9 +244,29 @@ bool InputClass::IsLeftArrowPressed()
 }
 
 
-bool InputClass::IsRightArrowPressed()
+bool InputClass::IsDPressed()
 {
-	if(m_keyboardState[DIK_RIGHT] & 0x80)
+	if(m_keyboardState[DIK_D] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsWPressed()
+{
+	if (m_keyboardState[DIK_W] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::IsSPressed()
+{
+	if (m_keyboardState[DIK_S] & 0x80)
 	{
 		return true;
 	}
@@ -260,5 +279,12 @@ void InputClass::GetMouseLocation(int& mouseX, int& mouseY)
 {
 	mouseX = m_mouseX;
 	mouseY = m_mouseY;
+	return;
+}
+
+void InputClass::GetMouseDelta(int& deltaX, int& deltaY)
+{
+	deltaX = m_mouseX - m_prevMouseX;
+	deltaY = m_mouseY - m_prevMouseY;
 	return;
 }
