@@ -20,21 +20,15 @@ using namespace std;
 // MY CLASS INCLUDES //
 ///////////////////////
 #include "textureclass.h"
+#include "IModel.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// Class name: ModelClass
+// Class name: CubeModelClass
 ////////////////////////////////////////////////////////////////////////////////
-class CubeModelClass
+class CubeModelClass : public IModel
 {
 private:
-	struct VertexType
-	{
-		XMFLOAT3 position;
-		XMFLOAT2 texture;
-		XMFLOAT3 normal;
-	};
-
 	struct ModelType
 	{
 		float x, y, z;
@@ -47,28 +41,14 @@ public:
 	CubeModelClass(const CubeModelClass&);
 	~CubeModelClass();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext* deviceContext, WCHAR*, char*);
-	void Shutdown();
-	void Render(ID3D11DeviceContext*);
-
-	int GetIndexCount();
-	ID3D11ShaderResourceView* GetTexture();
-
 private:
-	bool InitializeBuffers(ID3D11Device*);
-	void ShutdownBuffers();
-	void RenderBuffers(ID3D11DeviceContext*);
-
-	bool LoadTexture(ID3D11Device*, ID3D11DeviceContext* deviceContext, WCHAR*);
-	void ReleaseTexture();
-
-	bool LoadModel(char*);
+	bool LoadModel();
 	void ReleaseModel();
+	void FillBuffers(VertexType outputBuffer[], unsigned long outputIndexes[]);
+
+	bool LoadModel(char* filename);
 
 private:
-	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
-	int m_vertexCount, m_indexCount;
-	TextureClass* m_Texture;
 	ModelType* m_model;
 };
 
