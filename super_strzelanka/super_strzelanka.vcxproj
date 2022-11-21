@@ -28,17 +28,19 @@
     <ClCompile Include="..\source\fontshaderclass.cpp" />
     <ClCompile Include="..\source\frustumclass.cpp" />
     <ClCompile Include="..\source\graphicsclass.cpp" />
+    <ClCompile Include="..\source\IModel.cpp" />
     <ClCompile Include="..\source\inputclass.cpp" />
     <ClCompile Include="..\source\lightclass.cpp" />
     <ClCompile Include="..\source\lightshaderclass.cpp" />
     <ClCompile Include="..\source\main.cpp" />
-    <ClCompile Include="..\source\modelclass.cpp" />
+    <ClCompile Include="..\source\CubeModelClass.cpp" />
     <ClCompile Include="..\source\modellistclass.cpp" />
     <ClCompile Include="..\source\positionclass.cpp" />
     <ClCompile Include="..\source\systemclass.cpp" />
     <ClCompile Include="..\source\textclass.cpp" />
     <ClCompile Include="..\source\textureclass.cpp" />
     <ClCompile Include="..\source\timerclass.cpp" />
+    <ClCompile Include="..\source\WallModelClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\BBoxCollisionClass.h" />
@@ -51,16 +53,18 @@
     <ClInclude Include="..\source\fontshaderclass.h" />
     <ClInclude Include="..\source\frustumclass.h" />
     <ClInclude Include="..\source\graphicsclass.h" />
+    <ClInclude Include="..\source\IModel.h" />
     <ClInclude Include="..\source\inputclass.h" />
     <ClInclude Include="..\source\lightclass.h" />
     <ClInclude Include="..\source\lightshaderclass.h" />
-    <ClInclude Include="..\source\modelclass.h" />
+    <ClInclude Include="..\source\CubeModelClass.h" />
     <ClInclude Include="..\source\modellistclass.h" />
     <ClInclude Include="..\source\positionclass.h" />
     <ClInclude Include="..\source\systemclass.h" />
     <ClInclude Include="..\source\textclass.h" />
     <ClInclude Include="..\source\textureclass.h" />
     <ClInclude Include="..\source\timerclass.h" />
+    <ClInclude Include="..\source\WallModelClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Engine\font.ps" />

@@ -14,7 +14,7 @@ GraphicsClass::GraphicsClass()
 	m_D3D = 0;
 	m_Camera = 0;
 	m_Text = 0;
-	m_Model = 0;
+	m_EnemyModel = 0;
 	m_LightShader = 0;
 	m_Light = 0;
 	m_ModelList = 0;
@@ -80,17 +80,17 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
-	// Create the model object.
-	m_Model = new ModelClass;
-	if(!m_Model)
+	// Create the text object.
+	m_EnemyModel = new CubeModelClass;
+	if (!m_EnemyModel)
 	{
 		return false;
 	}
 
 	// Initialize the model object.
 	WCHAR textureFileName[] = CUBE_TEXTURE_FILENAME;
-	result = m_Model->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), textureFileName, CUBE_MODEL_FILENAME);
-	if(!result)
+	result = m_EnemyModel->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), textureFileName, CUBE_MODEL_FILENAME);
+	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
@@ -108,9 +108,9 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	for (int i = 0; i < SIMPLE_CUBE_ENEMY_NUMBER; i++)
 	{
 		EnemyClass Enemy;
-
-		// Init model
-		Enemy.Initialize(m_Model);
+		
+		// Pass pointer to a model, so only one model needs to be initialized for i.e. 10 enemy instances
+		Enemy.SetModel(m_EnemyModel);
 
 		// Add all needed collisionBBoxes
 		for (int j = 0; j < SIMPLE_CUBE_BBOX_NUMBER; j++)
@@ -120,7 +120,6 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 		m_EnemyList.push_back(Enemy);
 	}
-	
 
 	// Create the light shader object.
 	m_LightShader = new LightShaderClass;
@@ -206,11 +205,11 @@ void GraphicsClass::Shutdown()
 	}
 
 	// Release the model object.
-	if(m_Model)
+	if(m_EnemyModel)
 	{
-		m_Model->Shutdown();
-		delete m_Model;
-		m_Model = 0;
+		m_EnemyModel->Shutdown();
+		delete m_EnemyModel;
+		m_EnemyModel = 0;
 	}
 
 	// Release the text object.

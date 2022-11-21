@@ -22,7 +22,7 @@ const float SCREEN_NEAR = 0.1f;
 #include "d3dclass.h"
 #include "cameraclass.h"
 #include "textclass.h"
-#include "modelclass.h"
+#include "CubeModelClass.h"
 #include "lightshaderclass.h"
 #include "lightclass.h"
 #include "modellistclass.h"
@@ -49,7 +49,7 @@ private:
 	D3DClass* m_D3D;
 	CameraClass* m_Camera;
 	TextClass* m_Text;
-	ModelClass* m_Model;
+	CubeModelClass* m_EnemyModel;
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;
 	ModelListClass* m_ModelList;

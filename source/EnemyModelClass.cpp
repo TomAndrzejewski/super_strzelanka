@@ -4,19 +4,13 @@
 EnemyModelClass::EnemyModelClass()
 {
 	m_model = nullptr;
+	m_CollModelPos = XMFLOAT3(0.0f, 0.0f, 0.0f);
 }
 
 
 EnemyModelClass::~EnemyModelClass()
 {
 
-}
-
-
-bool EnemyModelClass::Initialize(ModelClass* model)
-{
-	if (model == nullptr) { return false; }
-	else { m_model = model; return true; }
 }
 
 

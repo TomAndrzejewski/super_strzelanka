@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BBoxCollisionClass.h"
-#include "modelclass.h"
+#include "CubeModelClass.h"
 #include <vector>
 
 using std::vector;
@@ -18,8 +18,6 @@ public:
 	EnemyModelClass();
 	~EnemyModelClass();
 
-	bool Initialize(ModelClass* model);
-
 	void AddCollisionBBox(const XMFLOAT3& position, const XMFLOAT3& extends);
 	void ChangeBBoxPosition(size_t index, const XMFLOAT3& position);
 
@@ -33,12 +31,12 @@ public:
 	BBoxCollisionClass& GetBBox(size_t index) { return m_BBoxList.at(index); }
 	vector<BBoxCollisionClass>* GetBBoxList() { return &m_BBoxList; }
 
-	ModelClass* GetModel() { return m_model; }
-	bool SetModel(ModelClass* model) { if (model == nullptr) return false;	else { m_model = model; return true; } }
+	CubeModelClass* GetModel() { return m_model; }
+	bool SetModel(CubeModelClass* model) { if (model == nullptr) return false;	else { m_model = model; return true; } }
 
 private:
 	vector<BBoxCollisionClass> m_BBoxList;
-	ModelClass* m_model;
+	CubeModelClass* m_model;
 	XMFLOAT3 m_CollModelPos;
 };
 
