@@ -2,18 +2,19 @@
 // Filename: positionclass.cpp
 ////////////////////////////////////////////////////////////////////////////////
 #include "positionclass.h"
+#include "CommonConsts.h"
 
 PositionClass::PositionClass()
 {
 	m_frameTime = 0.0f;
-	m_rotationY = 0.0f;
-	m_rotationX = 0.0f;
+	m_rotationY = startRot.y;
+	m_rotationX = startRot.x;
 	m_leftTurnSpeed  = 0.0f;
 	m_rightTurnSpeed = 0.0f;
 	m_forwardMoveSpeed = 0.0f;
 	m_backwardMoveSpeed = 0.0f;
-	m_positionZ = -10.0f;
-	m_positionX = 0.0f;
+	m_positionZ = startPos.z;
+	m_positionX = startPos.x;
 	m_leftMoveSpeed = 0.0f;
 	m_rightMoveSpeed = 0.0f;
 
@@ -269,4 +270,16 @@ void PositionClass::GetPosition(float& z, float& x)
 {
 	z = m_positionZ;
 	x = m_positionX;
+}
+
+void PositionClass::SetPosition(float x, float z)
+{
+	m_positionX = x;
+	m_positionZ = z;
+}
+
+void PositionClass::SetRotation(float x, float y)
+{
+	m_rotationX = x;
+	m_rotationY = y;
 }

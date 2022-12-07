@@ -51,7 +51,9 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
 	color = saturate(diffuseColor * lightIntensity);
 
 	// Multiply the texture pixel and the input color to get the final result.
-	color = color * textureColor;
+	//color = color * textureColor;
+	//color = textureColor;
+	color = diffuseColor;
 	
 	return color;
 }

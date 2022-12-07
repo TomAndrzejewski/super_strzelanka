@@ -110,8 +110,14 @@ XMVECTOR CameraClass::GetPositionVector()
 	return m_positionVector;
 }
 
-
 XMVECTOR CameraClass::GetLookAtVector()
 {
 	return m_lookAtVector;
+}
+
+XMVECTOR CameraClass::GetRotationVector()
+{
+	XMFLOAT3 rot = XMFLOAT3(m_rotationX, m_rotationY, m_rotationZ);
+	XMVECTOR rotVect = XMLoadFloat3(&rot);
+	return rotVect;
 }

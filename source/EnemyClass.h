@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EnemyModelClass.h"
+#include "ModelToWorldClass.h"
 
 
 enum EnemyStateEnum
@@ -11,7 +12,7 @@ enum EnemyStateEnum
 };
 
 
-class EnemyClass : public EnemyModelClass
+class EnemyClass : public EnemyModelClass, public ModelToWorldClass
 {
 public:
 	EnemyClass();

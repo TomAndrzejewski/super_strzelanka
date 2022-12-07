@@ -2,7 +2,7 @@
 // Filename: textclass.cpp
 ///////////////////////////////////////////////////////////////////////////////
 #include "textclass.h"
-#include "CommonDefs.h"
+#include "CommonConsts.h"
 
 
 TextClass::TextClass()
@@ -46,8 +46,7 @@ bool TextClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 
 
 	// Initialize the font object.
-	WCHAR font[] = FONT_TEXTURE_FILENAME;
-	result = m_Font->Initialize(device, deviceContext, FONT_MODEL_FILENAME, font);
+	result = m_Font->Initialize(device, deviceContext, FONT_MODEL_FILENAME, (WCHAR*)FONT_TEXTURE_FILENAME);
 	if(!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the font object.", L"Error", MB_OK);

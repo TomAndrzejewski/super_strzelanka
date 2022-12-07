@@ -1,7 +1,7 @@
 #include "EnemyClass.h"
 
 
-EnemyClass::EnemyClass() : EnemyModelClass()
+EnemyClass::EnemyClass() : EnemyModelClass(), ModelToWorldClass()
 {
 	m_EnemyHit = false;
 	m_EnemyState = PlayerNotStartedEnum;

@@ -10,14 +10,19 @@ BBoxCollisionClass::BBoxCollisionClass()
 {
 	m_position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_extends = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	m_boundingBox = BoundingBox(m_position, m_extends);
+	m_orientation = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+	m_boundingBox = BoundingOrientedBox(m_position, m_extends, m_orientation);
 }
 
-BBoxCollisionClass::BBoxCollisionClass(const XMFLOAT3& position, const XMFLOAT3& extends)
+BBoxCollisionClass::BBoxCollisionClass(const XMFLOAT3& position, const XMFLOAT3& extends, const XMFLOAT3& orientation)
 {
 	m_position = position;
 	m_extends = extends;
-	m_boundingBox = BoundingBox(m_position, m_extends);
+
+	XMVECTOR quaternionsVect = XMQuaternionRotationRollPitchYaw(orientation.x, orientation.y, orientation.z);
+	XMStoreFloat4(&m_orientation, quaternionsVect);
+
+	m_boundingBox = BoundingOrientedBox(m_position, m_extends, m_orientation);
 }
 
 BBoxCollisionClass::~BBoxCollisionClass()
@@ -28,20 +33,32 @@ BBoxCollisionClass::~BBoxCollisionClass()
 void BBoxCollisionClass::SetPosition(const XMFLOAT3& position)
 {
 	m_position = position;
-	m_boundingBox = BoundingBox(m_position, m_extends);
+	m_boundingBox = BoundingOrientedBox(m_position, m_extends, m_orientation);
 }
 
 void BBoxCollisionClass::SetExtends(const XMFLOAT3& extends)
 {
 	m_extends = extends;
-	m_boundingBox = BoundingBox(m_position, m_extends);
+	m_boundingBox = BoundingOrientedBox(m_position, m_extends, m_orientation);
 }
 
-void BBoxCollisionClass::SetBoundingBox(const XMFLOAT3& position, const XMFLOAT3& extends)
+void BBoxCollisionClass::SetOrientation(const XMFLOAT3& orientation)
+{
+	XMVECTOR quaternionsVect = XMQuaternionRotationRollPitchYaw(orientation.x, orientation.y, orientation.z);
+	XMStoreFloat4(&m_orientation, quaternionsVect);
+
+	m_boundingBox = BoundingOrientedBox(m_position, m_extends, m_orientation);
+}
+
+void BBoxCollisionClass::SetBoundingBox(const XMFLOAT3& position, const XMFLOAT3& extends, const XMFLOAT3& orientation)
 {
 	m_position = position;
 	m_extends = extends;
-	m_boundingBox = BoundingBox(m_position, m_extends);
+
+	XMVECTOR quaternionsVect = XMQuaternionRotationRollPitchYaw(orientation.x / 57.3, orientation.y / 57.3, orientation.z / 57.3); // angle/57.3 converts from degrees to radians
+	XMStoreFloat4(&m_orientation, quaternionsVect);
+
+	m_boundingBox = BoundingOrientedBox(m_position, m_extends, m_orientation);
 }
 
 bool BBoxCollisionClass::Intersects(const XMVECTOR& cameraPosition, const XMVECTOR& cameraLookAt, float& dist)
@@ -60,6 +77,12 @@ bool BBoxCollisionClass::Intersects(const XMVECTOR& cameraPosition, const XMVECT
 
 	float dist; //unused
 	bool ret = m_boundingBox.Intersects(cameraPosition, cameraDirectionVect, dist);
+	return ret;
+}
+
+bool BBoxCollisionClass::Intersects(const BoundingOrientedBox& bbox)
+{
+	bool ret = m_boundingBox.Intersects(bbox);
 	return ret;
 }
 

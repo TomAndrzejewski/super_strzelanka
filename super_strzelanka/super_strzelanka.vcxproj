@@ -22,6 +22,7 @@
     <ClCompile Include="..\source\BBoxCollisionClass.cpp" />
     <ClCompile Include="..\source\cameraclass.cpp" />
     <ClCompile Include="..\source\d3dclass.cpp" />
+    <ClCompile Include="..\source\DebugDraw.cpp" />
     <ClCompile Include="..\source\EnemyClass.cpp" />
     <ClCompile Include="..\source\EnemyModelClass.cpp" />
     <ClCompile Include="..\source\fontclass.cpp" />
@@ -33,20 +34,25 @@
     <ClCompile Include="..\source\lightclass.cpp" />
     <ClCompile Include="..\source\lightshaderclass.cpp" />
     <ClCompile Include="..\source\main.cpp" />
-    <ClCompile Include="..\source\CubeModelClass.cpp" />
+    <ClCompile Include="..\source\ModelToWorldClass.cpp" />
+    <ClCompile Include="..\source\PlayerClass.cpp" />
+    <ClCompile Include="..\source\PlayerCollisionClass.cpp" />
+    <ClCompile Include="..\source\SimpleModelClass.cpp" />
     <ClCompile Include="..\source\modellistclass.cpp" />
     <ClCompile Include="..\source\positionclass.cpp" />
     <ClCompile Include="..\source\systemclass.cpp" />
     <ClCompile Include="..\source\textclass.cpp" />
     <ClCompile Include="..\source\textureclass.cpp" />
     <ClCompile Include="..\source\timerclass.cpp" />
-    <ClCompile Include="..\source\WallModelClass.cpp" />
+    <ClCompile Include="..\source\WallClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\BBoxCollisionClass.h" />
     <ClInclude Include="..\source\cameraclass.h" />
-    <ClInclude Include="..\source\CommonDefs.h" />
+    <ClInclude Include="..\source\CommonConsts.h" />
+    <ClInclude Include="..\source\CommonTypes.h" />
     <ClInclude Include="..\source\d3dclass.h" />
+    <ClInclude Include="..\source\DebugDraw.h" />
     <ClInclude Include="..\source\EnemyClass.h" />
     <ClInclude Include="..\source\EnemyModelClass.h" />
     <ClInclude Include="..\source\fontclass.h" />
@@ -57,14 +63,17 @@
     <ClInclude Include="..\source\inputclass.h" />
     <ClInclude Include="..\source\lightclass.h" />
     <ClInclude Include="..\source\lightshaderclass.h" />
-    <ClInclude Include="..\source\CubeModelClass.h" />
+    <ClInclude Include="..\source\ModelToWorldClass.h" />
+    <ClInclude Include="..\source\PlayerClass.h" />
+    <ClInclude Include="..\source\PlayerCollisionClass.h" />
+    <ClInclude Include="..\source\SimpleModelClass.h" />
     <ClInclude Include="..\source\modellistclass.h" />
     <ClInclude Include="..\source\positionclass.h" />
     <ClInclude Include="..\source\systemclass.h" />
     <ClInclude Include="..\source\textclass.h" />
     <ClInclude Include="..\source\textureclass.h" />
     <ClInclude Include="..\source\timerclass.h" />
-    <ClInclude Include="..\source\WallModelClass.h" />
+    <ClInclude Include="..\source\WallClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Engine\font.ps" />

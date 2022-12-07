@@ -48,7 +48,7 @@
     <ClCompile Include="..\source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\CubeModelClass.cpp">
+    <ClCompile Include="..\source\SimpleModelClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\source\modellistclass.cpp">
@@ -78,10 +78,22 @@
     <ClCompile Include="..\source\EnemyClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\WallModelClass.cpp">
+    <ClCompile Include="..\source\WallClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\source\IModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ModelToWorldClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\PlayerCollisionClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\PlayerClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\DebugDraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,7 +125,7 @@
     <ClInclude Include="..\source\lightshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\CubeModelClass.h">
+    <ClInclude Include="..\source\SimpleModelClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\source\modellistclass.h">
@@ -134,7 +146,7 @@
     <ClInclude Include="..\source\timerclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\CommonDefs.h">
+    <ClInclude Include="..\source\CommonConsts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\source\BBoxCollisionClass.h">
@@ -146,10 +158,25 @@
     <ClInclude Include="..\source\EnemyClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\WallModelClass.h">
+    <ClInclude Include="..\source\WallClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\source\IModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\ModelToWorldClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\PlayerCollisionClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\PlayerClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\CommonTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\DebugDraw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,16 +7,14 @@ EnemyModelClass::EnemyModelClass()
 	m_CollModelPos = XMFLOAT3(0.0f, 0.0f, 0.0f);
 }
 
-
 EnemyModelClass::~EnemyModelClass()
 {
 
 }
 
-
-void EnemyModelClass::AddCollisionBBox(const XMFLOAT3& position, const XMFLOAT3& extends)
+void EnemyModelClass::AddCollisionBBox(const XMFLOAT3& position, const XMFLOAT3& extends, const XMFLOAT3& orientation)
 {
-	BBoxCollisionClass bbox(position, extends);
+	BBoxCollisionClass bbox(position, extends, orientation);
 	m_BBoxList.push_back(bbox);
 }
 

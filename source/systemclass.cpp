@@ -227,7 +227,7 @@ bool SystemClass::Frame()
 	}
 
 	// Finally render the graphics to the screen.
-	result = m_Graphics->Render();
+	result = m_Graphics->Render(m_Position);
 	if(!result)
 	{
 		return false;

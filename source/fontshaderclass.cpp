@@ -2,7 +2,7 @@
 // Filename: fontshaderclass.cpp
 ////////////////////////////////////////////////////////////////////////////////
 #include "fontshaderclass.h"
-#include "CommonDefs.h"
+#include "CommonConsts.h"
 
 
 FontShaderClass::FontShaderClass()

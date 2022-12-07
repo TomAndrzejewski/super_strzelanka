@@ -2,7 +2,7 @@
 // Filename: lightshaderclass.cpp
 ////////////////////////////////////////////////////////////////////////////////
 #include "lightshaderclass.h"
-#include "CommonDefs.h"
+#include "CommonConsts.h"
 
 
 LightShaderClass::LightShaderClass()

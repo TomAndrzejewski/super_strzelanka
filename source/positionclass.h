@@ -24,6 +24,8 @@ public:
 	void SetFrameTime(float);
 	void GetRotation(float&, float&);
 	void GetPosition(float&, float&);
+	void SetPosition(float, float);
+	void SetRotation(float, float);
 
 	void TurnLeft(bool);
 	void TurnRight(bool);

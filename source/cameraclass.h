@@ -27,6 +27,7 @@ public:
 
 	XMVECTOR GetPositionVector();
 	XMVECTOR GetLookAtVector();
+	XMVECTOR GetRotationVector();
 
 	void Render();
 	void GetViewMatrix(XMMATRIX&);
