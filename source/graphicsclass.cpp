@@ -344,11 +344,9 @@ bool GraphicsClass::Frame(float rotationY, float rotationX, float positionZ, flo
 
 bool GraphicsClass::Render(PositionClass* positionClass)
 {
-	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
-	int modelCount, renderCount, index;
-	float positionX, positionY, positionZ, radius;
+	XMMATRIX viewMatrix;
 	XMFLOAT4 color;
-	bool renderModel, result;
+	bool result;
 
 
 	// Clear the buffers to begin the scene.
@@ -357,12 +355,105 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
 
-	// Get the view, projection, and world matrices from the camera and D3D objects.
-	m_Camera->GetViewMatrix(viewMatrix);
-	m_D3D->GetWorldMatrix(worldMatrix);
-	m_D3D->GetProjectionMatrix(projectionMatrix);
-	m_D3D->GetOrthoMatrix(orthoMatrix);
+	// Process player collision if on
+	viewMatrix = (playerCollisionON) ? ProcessPlayerCollision(positionClass) : m_Camera->GetViewMatrix();
 
+	ProcessShootingCollision();
+
+	RenderEnemies(m_EnemyList, viewMatrix);
+
+	RenderWalls(m_WallList, m_WallColors, viewMatrix);
+
+	if (drawCollisionBBoxes)
+	{
+		RenderCollisionBoxes();
+	}
+
+	// HERE IS TEXT RENDERING //
+	// Set the number of models that was actually rendered this frame.
+	result = m_Text->SetRenderCount(0, m_D3D->GetDeviceContext());
+	if(!result)
+	{
+		return false;
+	}
+
+	// Turn off the Z buffer to begin all 2D rendering.
+	m_D3D->TurnZBufferOff();
+
+	// Turn on the alpha blending before rendering the text.
+	m_D3D->TurnOnAlphaBlending();
+
+	// Render the text strings.
+	result = m_Text->Render(m_D3D->GetDeviceContext(), m_D3D->GetWorldMatrix(), m_D3D->GetOrthoMatrix());
+	if(!result)
+	{
+		return false;
+	}
+
+	// Turn off alpha blending after rendering the text.
+	m_D3D->TurnOffAlphaBlending();
+
+	// Turn the Z buffer back on now that all 2D rendering has completed.
+	m_D3D->TurnZBufferOn();
+
+	// Present the rendered scene to the screen.
+	m_D3D->EndScene();
+
+	return true;
+}
+
+void GraphicsClass::ProcessShootingCollision()
+{
+	int minKilledEnemyDistIndex = 0;
+	float minKilledEnemyDist = FLT_MAX;
+	float minWallHitDist = FLT_MAX;
+	float minObstacleHitDist = FLT_MAX;
+	float dist;
+
+	// Go through all the walls
+	for (int index = 0; index < sizeOf_walls; index++)
+	{
+		WallClass* pWall = &m_WallList.at(index);
+
+		if (m_Player.CheckIntersection(m_Camera->GetPositionVector(), m_Camera->GetLookAtVector(), pWall->GetBBox(), dist))
+		{
+			minWallHitDist = (dist < minWallHitDist) ? dist : minWallHitDist;
+		}
+	}
+
+	// Go through all the enemies
+	for (int index = 0; index < sizeOf_enemies; index++)
+	{
+		EnemyClass* pEnemy = &m_EnemyList.at(index);
+
+		if (pEnemy->GetEnemyState() == PlayerShootEnemyEnum)
+		{
+			continue;
+		}
+
+		if (pEnemy->CheckIfEnemyIsHit(m_Camera->GetPositionVector(), m_Camera->GetLookAtVector(), dist))
+		{
+			minKilledEnemyDist = (dist < minKilledEnemyDist) ? dist : minKilledEnemyDist;
+			minKilledEnemyDistIndex = index;
+		}
+	}
+
+	// Go through all the obstacles
+
+
+	if ((minKilledEnemyDist > minWallHitDist) || (minKilledEnemyDist > minObstacleHitDist) || (minKilledEnemyDist == FLT_MAX))
+	{
+		// Nothing to do, first hit wall or obstacle or no enemy was hit at all so enemy was not hit
+		return;
+	}
+
+	// Enemy got hit, set his status as being hit and inform player that there has been a kill
+	m_EnemyList.at(minKilledEnemyDistIndex).EnemyGotHit();
+	m_Player.PlayerKilledEnemy();
+}
+
+XMMATRIX& GraphicsClass::ProcessPlayerCollision(PositionClass* positionClass)
+{
 	// Check for player collision with walls
 	XMFLOAT3 pos, rot;
 	XMStoreFloat3(&pos, m_Camera->GetPositionVector());
@@ -380,7 +471,7 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 	}
 	XMStoreFloat3(&pos, m_Camera->GetPositionVector());
 	XMStoreFloat3(&rot, m_Camera->GetRotationVector());
-	//m_Player.RememberLastPosAndRot(pos, rot, collisionOccured);
+	m_Player.RememberLastPosAndRot(pos, rot, collisionOccured);
 	m_Player.RememberLastPosAndRot(pos, rot, false);
 	m_Player.GetLastPosAndRot(pos, rot);
 
@@ -390,7 +481,6 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 	positionClass->SetPosition(pos.x, pos.z);
 	positionClass->SetRotation(rot.x, rot.y);
 	m_Camera->Render();
-	m_Camera->GetViewMatrix(viewMatrix);
 
 
 	// Check if player get to ending position
@@ -401,152 +491,90 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 		positionClass->SetPosition(startPos.x, startPos.z);
 		positionClass->SetRotation(startRot.x, startRot.y);
 		m_Camera->Render();
-		m_Camera->GetViewMatrix(viewMatrix);
 	}
 
+	return m_Camera->GetViewMatrix();
+}
 
-	// Construct the frustum.
-	XMFLOAT4X4 pMatrix, vMatrix;
-	XMStoreFloat4x4(&pMatrix, projectionMatrix);
-	XMStoreFloat4x4(&vMatrix, viewMatrix);
-	m_Frustum->ConstructFrustum(SCREEN_DEPTH, pMatrix, vMatrix);
-
-	// Get the number of models that will be rendered.
-	modelCount = m_ModelList->GetModelCount();
-
-	// Initialize the count of models that have been rendered.
-	renderCount = 0;
-
-	// Go through all the models and render them only if they can be seen by the camera view.
-	for(index=0; index < sizeOf_enemies; index++)
+void GraphicsClass::RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMatrix)
+{
+	// Go through all the enemies
+	for (int index = 0; index < sizeOf_enemies; index++)
 	{
-		// Get the position and color of the sphere model at this index.
-		//m_ModelList->GetData(index, positionX, positionY, positionZ, color);
-
-		// Set the radius of the sphere to 1.0 since this is already known.
-		//radius = 1.0f;
-
-		// Check if the sphere model is in the view frustum.
-		//renderModel = m_Frustum->CheckSphere(positionX, positionY, positionZ, radius);
-
-		// If it can be seen then render it, if not skip this model and check the next sphere.
-		EnemyClass* pEnemy = &m_EnemyList.at(index);
-		//if(renderModel)
-		if(pEnemy->GetEnemyState() != PlayerShootEnemyEnum)
+		XMFLOAT4 color;
+		EnemyClass* pEnemy = &enemies.at(index);
+		if (pEnemy->GetEnemyState() == PlayerShootEnemyEnum)
 		{
-			// Move the model to the location it should be rendered at.
-			worldMatrix = pEnemy->GetModelToWorldMatrix();
-			
-			//pEnemy->ChangeCollisionModelPos(XMFLOAT3(positionX, positionY, positionZ));
-			bool collisionOccurs = pEnemy->CheckIfEnemyIsHit(m_Camera->GetPositionVector(), m_Camera->GetLookAtVector());
-			if (collisionOccurs)
-			{
-				color = XMFLOAT4(0.0f, 0.0f, 1.0f, 0.0f);
-				m_Player.PlayerKilledEnemy();
-				pEnemy->EnemyGotHit();
-				// Reset to the original world matrix.
-				m_D3D->GetWorldMatrix(worldMatrix);
-				continue;
-			}
-			else
-			{
-				color = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.0f);
-				//pEnemy->PlayerRestarted();
-				//pEnemy->PlayerStarted();
-			}
-			
-			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-			pEnemy->GetModel()->Render(m_D3D->GetDeviceContext());
-
-			// Render the model using the light shader.
-			m_LightShader->Render(m_D3D->GetDeviceContext(), pEnemy->GetModel()->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-								pEnemy->GetModel()->GetTexture(), m_Light->GetDirection(), color);
-
-			// Reset to the original world matrix.
-			m_D3D->GetWorldMatrix(worldMatrix);
-
-			// Since this model was rendered then increase the count for this frame.
-			renderCount++;
+			color = XMFLOAT4(0.0f, 0.0f, 1.0f, 0.0f); // blue
 		}
+		else
+		{
+			color = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.0f); // white
+		}
+		// Move the model to the location it should be rendered at.
+		XMMATRIX worldMatrix = pEnemy->GetModelToWorldMatrix();
+
+		// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+		pEnemy->GetModel()->Render(m_D3D->GetDeviceContext());
+
+		// Render the model using the light shader.
+		m_LightShader->Render(m_D3D->GetDeviceContext(), pEnemy->GetModel()->GetIndexCount(), worldMatrix, viewMatrix, m_D3D->GetProjectionMatrix(),
+			pEnemy->GetModel()->GetTexture(), m_Light->GetDirection(), color);
 	}
+}
 
+void GraphicsClass::RenderWalls(vector<WallClass>& walls, vector<XMFLOAT4>& colorsOfWalls, XMMATRIX& viewMatrix)
+{
 	// Rendering of walls
-	for (index = 0; index < sizeOf_walls; index++)
+	for (int index = 0; index < sizeOf_walls; index++)
 	{
-		WallClass* pWall = &m_WallList.at(index);
+		WallClass* pWall = &walls.at(index);
 
-		worldMatrix = pWall->GetModelToWorldMatrix();
+		XMMATRIX worldMatrix = pWall->GetModelToWorldMatrix();
 
 		// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 		pWall->GetModel()->Render(m_D3D->GetDeviceContext());
 
-		//color = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.0f);
-		//color = XMFLOAT4(0.1 * index, 1 - 0.1 * index, 0.1 * index, 1.0f);
-		color = m_WallColors.at(index);
+		// Get color of wall
+		XMFLOAT4 color = colorsOfWalls.at(index);
 
 		// Render the model using the light shader.
-		m_LightShader->Render(m_D3D->GetDeviceContext(), pWall->GetModel()->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+		m_LightShader->Render(m_D3D->GetDeviceContext(), pWall->GetModel()->GetIndexCount(), worldMatrix, viewMatrix, m_D3D->GetProjectionMatrix(),
 			pWall->GetModel()->GetTexture(), m_Light->GetDirection(), color);
-
-		// Reset to the original world matrix.
-		m_D3D->GetWorldMatrix(worldMatrix);
 	}
+}
 
-
-	// Debug draw all collision bboxes
+void GraphicsClass::RenderCollisionBoxes()
+{
+	// Operations needed for debug drawing
 	m_D3D->GetDeviceContext()->OMSetBlendState(m_states->Opaque(), nullptr, 0xFFFFFFFF);
 	m_D3D->GetDeviceContext()->OMSetDepthStencilState(m_states->DepthNone(), 0);
 	m_D3D->GetDeviceContext()->RSSetState(m_states->CullNone());
 
 	m_effect->Apply(m_D3D->GetDeviceContext());
-	m_effect->SetView(viewMatrix);
-	m_effect->SetProjection(projectionMatrix);
+
+	// View and projection matrices
+	m_effect->SetView(m_Camera->GetViewMatrix());
+	m_effect->SetProjection(m_D3D->GetProjectionMatrix());
 
 	m_D3D->GetDeviceContext()->IASetInputLayout(m_inputLayout.Get());
 
 	m_batch->Begin();
 
+	// Walls' collision bboxes
 	for (int i = 0; i < sizeOf_walls; i++)
 	{
 		DX::Draw(m_batch.get(), m_WallList.at(i).GetBBox().GetBoundingOrientedBox(), Colors::Blue);
 	}
+
+	// Enemies' collision bboxes
 	for (int i = 0; i < sizeOf_enemies; i++)
 	{
 		DX::Draw(m_batch.get(), m_EnemyList.at(i).GetBBox(0).GetBoundingOrientedBox(), Colors::White);
 	}
+
+	// Ending area bbox
 	DX::Draw(m_batch.get(), m_EndingAreaBBox.GetBoundingOrientedBox(), Colors::White);
 
 	m_batch->End();
-
-
-	// Set the number of models that was actually rendered this frame.
-	result = m_Text->SetRenderCount(renderCount, m_D3D->GetDeviceContext());
-	if(!result)
-	{
-		return false;
-	}
-
-	// Turn off the Z buffer to begin all 2D rendering.
-	m_D3D->TurnZBufferOff();
-
-	// Turn on the alpha blending before rendering the text.
-	m_D3D->TurnOnAlphaBlending();
-
-	// Render the text strings.
-	result = m_Text->Render(m_D3D->GetDeviceContext(), worldMatrix, orthoMatrix);
-	if(!result)
-	{
-		return false;
-	}
-
-	// Turn off alpha blending after rendering the text.
-	m_D3D->TurnOffAlphaBlending();
-
-	// Turn the Z buffer back on now that all 2D rendering has completed.
-	m_D3D->TurnZBufferOn();
-
-	// Present the rendered scene to the screen.
-	m_D3D->EndScene();
-
-	return true;
 }

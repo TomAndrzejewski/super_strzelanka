@@ -31,6 +31,7 @@ public:
 
 	void Render();
 	void GetViewMatrix(XMMATRIX&);
+	XMMATRIX& GetViewMatrix();
 
 private:
 	XMMATRIX m_viewMatrix;

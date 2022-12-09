@@ -543,6 +543,24 @@ void D3DClass::GetOrthoMatrix(XMMATRIX& orthoMatrix)
 }
 
 
+XMMATRIX& D3DClass::GetProjectionMatrix()
+{
+	return m_projectionMatrix;
+}
+
+
+XMMATRIX& D3DClass::GetWorldMatrix()
+{
+	return m_worldMatrix;
+}
+
+
+XMMATRIX& D3DClass::GetOrthoMatrix()
+{
+	return m_orthoMatrix;
+}
+
+
 void D3DClass::TurnZBufferOn()
 {
 	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 1);

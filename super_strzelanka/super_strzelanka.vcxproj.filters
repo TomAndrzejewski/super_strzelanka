@@ -96,6 +96,9 @@
     <ClCompile Include="..\source\DebugDraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\GameFlowClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\cameraclass.h">
@@ -179,6 +182,9 @@
     <ClInclude Include="..\source\DebugDraw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\GameFlowClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Engine\font.ps">
@@ -187,12 +193,12 @@
     <None Include="..\Engine\font.vs">
       <Filter>Engine</Filter>
     </None>
-    <None Include="packages.config" />
     <None Include="..\Engine\light.ps">
       <Filter>Engine</Filter>
     </None>
     <None Include="..\Engine\light.vs">
       <Filter>Engine</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

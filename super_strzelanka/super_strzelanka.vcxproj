@@ -28,6 +28,7 @@
     <ClCompile Include="..\source\fontclass.cpp" />
     <ClCompile Include="..\source\fontshaderclass.cpp" />
     <ClCompile Include="..\source\frustumclass.cpp" />
+    <ClCompile Include="..\source\GameFlowClass.cpp" />
     <ClCompile Include="..\source\graphicsclass.cpp" />
     <ClCompile Include="..\source\IModel.cpp" />
     <ClCompile Include="..\source\inputclass.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="..\source\fontclass.h" />
     <ClInclude Include="..\source\fontshaderclass.h" />
     <ClInclude Include="..\source\frustumclass.h" />
+    <ClInclude Include="..\source\GameFlowClass.h" />
     <ClInclude Include="..\source\graphicsclass.h" />
     <ClInclude Include="..\source\IModel.h" />
     <ClInclude Include="..\source\inputclass.h" />
@@ -192,16 +194,16 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.XAudio2.Redist.1.2.9\build\native\Microsoft.XAudio2.Redist.targets" Condition="Exists('..\packages\Microsoft.XAudio2.Redist.1.2.9\build\native\Microsoft.XAudio2.Redist.targets')" />
     <Import Project="..\packages\directxtk_desktop_2019.2022.10.18.2\build\native\directxtk_desktop_2019.targets" Condition="Exists('..\packages\directxtk_desktop_2019.2022.10.18.2\build\native\directxtk_desktop_2019.targets')" />
-    <Import Project="..\packages\Microsoft.XAudio2.Redist.1.2.10\build\native\Microsoft.XAudio2.Redist.targets" Condition="Exists('..\packages\Microsoft.XAudio2.Redist.1.2.10\build\native\Microsoft.XAudio2.Redist.targets')" />
     <Import Project="..\packages\directxtex_desktop_2019.2022.10.18.1\build\native\directxtex_desktop_2019.targets" Condition="Exists('..\packages\directxtex_desktop_2019.2022.10.18.1\build\native\directxtex_desktop_2019.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.XAudio2.Redist.1.2.9\build\native\Microsoft.XAudio2.Redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.XAudio2.Redist.1.2.9\build\native\Microsoft.XAudio2.Redist.targets'))" />
     <Error Condition="!Exists('..\packages\directxtk_desktop_2019.2022.10.18.2\build\native\directxtk_desktop_2019.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_desktop_2019.2022.10.18.2\build\native\directxtk_desktop_2019.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.XAudio2.Redist.1.2.10\build\native\Microsoft.XAudio2.Redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.XAudio2.Redist.1.2.10\build\native\Microsoft.XAudio2.Redist.targets'))" />
     <Error Condition="!Exists('..\packages\directxtex_desktop_2019.2022.10.18.1\build\native\directxtex_desktop_2019.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtex_desktop_2019.2022.10.18.1\build\native\directxtex_desktop_2019.targets'))" />
   </Target>
 </Project>

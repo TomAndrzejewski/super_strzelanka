@@ -71,6 +71,12 @@ public:
 	bool Frame(float, float, float, float);
 	bool Render(PositionClass* positionClass);
 
+	void ProcessShootingCollision();
+	void RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMatrix);
+	void RenderWalls(vector<WallClass>& walls, vector<XMFLOAT4>& colorsOfWalls, XMMATRIX& viewMatrix);
+	void RenderCollisionBoxes();
+	XMMATRIX& ProcessPlayerCollision(PositionClass* positionClass);
+
 private:
 	D3DClass* m_D3D;
 	CameraClass* m_Camera;

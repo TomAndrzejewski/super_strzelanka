@@ -6,6 +6,11 @@
 using std::string;
 
 
+// CONSTS THAT STEER CODE
+const bool drawCollisionBBoxes = true;
+const bool playerCollisionON = true;
+
+
 // SHADERS //
 #define FONT_VS_SHADER_FILENAME			L"../Engine/font.vs"
 #define FONT_PS_SHADER_FILENAME			L"../Engine/font.ps"
@@ -37,9 +42,19 @@ const string simpleCubeBBoxFiles[SIMPLE_CUBE_BBOX_NUMBER] = { "../Engine/data/cu
 // ALL ENEMY MODELS //
 const float playerYLevel = -5.0f;
 const float enemyHeight = 8.0f;
+const float enemyWidth = 4.0f;
 
-const ModelOrganizerStruct enemies[] = { { XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(1.0f, enemyHeight, 1.0f) }
-										};
+const ModelOrganizerStruct enemies[] = { { XMFLOAT3(-50.0f, -enemyHeight, 700.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(300.0f, -enemyHeight, 700.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(350.0f, -enemyHeight, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(485.0f, -enemyHeight, 730.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(660.0f, -enemyHeight, 160.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(600.0f, -enemyHeight, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(480.0f, -enemyHeight, -40.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(480.0f, -enemyHeight, 210.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(310.0f, -enemyHeight, 200.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(150.0f, -enemyHeight, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
+										 { XMFLOAT3(200.0f, -enemyHeight, 180.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) }, };
 
 const int sizeOf_enemies = sizeof(enemies) / sizeof(ModelOrganizerStruct);
 

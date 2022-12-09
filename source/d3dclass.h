@@ -45,6 +45,9 @@ public:
 	void GetProjectionMatrix(XMMATRIX&);
 	void GetWorldMatrix(XMMATRIX&);
 	void GetOrthoMatrix(XMMATRIX&);
+	XMMATRIX& GetWorldMatrix();
+	XMMATRIX& GetProjectionMatrix();
+	XMMATRIX& GetOrthoMatrix();
 
 	void TurnZBufferOn();
 	void TurnZBufferOff();

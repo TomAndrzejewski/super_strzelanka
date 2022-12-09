@@ -1,10 +1,28 @@
-﻿  graphicsclass.cpp
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(132,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(132,52): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(132,40): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(349,41): warning C4101: 'radius': unreferenced local variable
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(351,7): warning C4101: 'renderModel': unreferenced local variable
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(349,8): warning C4101: 'positionX': unreferenced local variable
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(349,19): warning C4101: 'positionY': unreferenced local variable
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(349,30): warning C4101: 'positionZ': unreferenced local variable
-  super_strzelanka.vcxproj -> C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\x64\Debug\super_strzelanka.exe
+﻿  EnemyClass.cpp
+  ModelToWorldClass.cpp
+  PlayerClass.cpp
+  PlayerCollisionClass.cpp
+  WallClass.cpp
+  fontshaderclass.cpp
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\fontshaderclass.cpp(298,42): warning C4244: '=': conversion from 'SIZE_T' to 'unsigned long', possible loss of data
+  graphicsclass.cpp
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(132,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(132,52): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(132,40): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(348,11): warning C4101: 'color': unreferenced local variable
+  lightshaderclass.cpp
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\lightshaderclass.cpp(309,42): warning C4244: '=': conversion from 'SIZE_T' to 'unsigned long', possible loss of data
+  main.cpp
+  positionclass.cpp
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(158,37): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(159,37): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(190,38): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(191,38): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(222,34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(223,34): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(252,35): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(253,35): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  systemclass.cpp
+  textclass.cpp
+  Generating Code...
+  super_strzelanka.vcxproj -> D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\x64\Debug\super_strzelanka.exe

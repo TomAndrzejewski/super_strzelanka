@@ -29,3 +29,8 @@ bool PlayerCollisionClass::CheckIntersection(WallClass& wall)
 {
 	return m_BBox.Intersects(wall.GetBBox().GetBoundingOrientedBox());
 }
+
+bool PlayerCollisionClass::CheckIntersection(const XMVECTOR& cameraPosition, const XMVECTOR& cameraLookAt, BBoxCollisionClass& bbox, float& dist)
+{
+	return bbox.Intersects(cameraPosition, cameraLookAt, dist);
+}

@@ -105,6 +105,12 @@ void CameraClass::GetViewMatrix(XMMATRIX& viewMatrix)
 }
 
 
+XMMATRIX& CameraClass::GetViewMatrix()
+{
+	return m_viewMatrix;
+}
+
+
 XMVECTOR CameraClass::GetPositionVector()
 {
 	return m_positionVector;
