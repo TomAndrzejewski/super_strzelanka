@@ -30,6 +30,7 @@
     <ClCompile Include="..\source\frustumclass.cpp" />
     <ClCompile Include="..\source\GameFlowClass.cpp" />
     <ClCompile Include="..\source\graphicsclass.cpp" />
+    <ClCompile Include="..\source\GunClass.cpp" />
     <ClCompile Include="..\source\IModel.cpp" />
     <ClCompile Include="..\source\inputclass.cpp" />
     <ClCompile Include="..\source\lightclass.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="..\source\frustumclass.h" />
     <ClInclude Include="..\source\GameFlowClass.h" />
     <ClInclude Include="..\source\graphicsclass.h" />
+    <ClInclude Include="..\source\GunClass.h" />
     <ClInclude Include="..\source\IModel.h" />
     <ClInclude Include="..\source\inputclass.h" />
     <ClInclude Include="..\source\lightclass.h" />

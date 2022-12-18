@@ -33,6 +33,9 @@ const WCHAR WALL_TEXTURE_FILENAME[] =	L"../Engine/data/seafloor.dds";
 #define FONT_MODEL_FILENAME				(char*)"../Engine/data/fontdata.txt"
 const WCHAR FONT_TEXTURE_FILENAME[] =	L"../Engine/data/font.dds";
 
+#define GUN1_MODEL_FILENAME			(char*)"../Engine/data/gun11.txt"
+const WCHAR GUN1_TEXTURE_FILENAME[] = L"../Engine/data/gun1.dds";
+
 
 // SIMPLE CUBE ENEMY MODEL //
 #define SIMPLE_CUBE_ENEMY_NUMBER		10

@@ -22,6 +22,7 @@ GraphicsClass::GraphicsClass()
 	m_Camera = 0;
 	m_Text = 0;
 	m_EnemyModel = 0;
+	m_Gun1Model = 0;
 	m_WallModel = 0;
 	m_LightShader = 0;
 	m_Light = 0;
@@ -142,6 +143,21 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 	// Initialize the model object.
 	result = m_EnemyModel->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), (WCHAR*)CUBE_TEXTURE_FILENAME, CUBE_MODEL_FILENAME);
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// Create the text object.
+	m_Gun1Model = new SimpleModelClass;
+	if (!m_Gun1Model)
+	{
+		return false;
+	}
+
+	// Initialize the gun model object.
+	result = m_Gun1Model->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), (WCHAR*)GUN1_TEXTURE_FILENAME, GUN1_MODEL_FILENAME);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -369,6 +385,8 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 		RenderCollisionBoxes();
 	}
 
+	RenderGun(viewMatrix);
+
 	// HERE IS TEXT RENDERING //
 	// Set the number of models that was actually rendered this frame.
 	result = m_Text->SetRenderCount(0, m_D3D->GetDeviceContext());
@@ -577,4 +595,21 @@ void GraphicsClass::RenderCollisionBoxes()
 	DX::Draw(m_batch.get(), m_EndingAreaBBox.GetBoundingOrientedBox(), Colors::White);
 
 	m_batch->End();
+}
+
+void GraphicsClass::RenderGun(XMMATRIX& viewMatrix)
+{
+	// Get player position and rotation
+	XMFLOAT3 playerPos, playerRot, posOffset;
+	m_Player.GetLastPosAndRot(playerPos, playerRot);
+
+	m_Gun.SetRelativePositionAndRotation(playerPos, playerRot);
+
+	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	m_Gun1Model->Render(m_D3D->GetDeviceContext());
+
+	//// Render the model using the light shader.
+	m_LightShader->Render(m_D3D->GetDeviceContext(), m_Gun1Model->GetIndexCount(), m_Gun.GetModelToWorldMatrix(), viewMatrix, m_D3D->GetProjectionMatrix(),
+		m_Gun1Model->GetTexture(), m_Light->GetDirection(), XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f));
+	
 }

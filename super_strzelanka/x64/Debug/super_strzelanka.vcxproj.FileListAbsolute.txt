@@ -1,2 +1,3 @@
 C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\super_strzelanka\x64\Debug\super_strzelanka.vcxproj.CopyComplete
 D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\super_strzelanka\x64\Debug\super_strzelanka.vcxproj.CopyComplete
+D:\Witek\@magisterka\@sem2\PWAG\repo\super_strzelanka\x64\Debug\super_strzelanka.vcxproj.CopyComplete

@@ -1,28 +1,5 @@
-﻿  EnemyClass.cpp
-  ModelToWorldClass.cpp
-  PlayerClass.cpp
-  PlayerCollisionClass.cpp
-  WallClass.cpp
-  fontshaderclass.cpp
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\fontshaderclass.cpp(298,42): warning C4244: '=': conversion from 'SIZE_T' to 'unsigned long', possible loss of data
-  graphicsclass.cpp
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(132,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(132,52): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(132,40): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(348,11): warning C4101: 'color': unreferenced local variable
-  lightshaderclass.cpp
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\lightshaderclass.cpp(309,42): warning C4244: '=': conversion from 'SIZE_T' to 'unsigned long', possible loss of data
-  main.cpp
-  positionclass.cpp
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(158,37): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(159,37): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(190,38): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(191,38): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(222,34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(223,34): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(252,35): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\source\positionclass.cpp(253,35): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-  systemclass.cpp
-  textclass.cpp
-  Generating Code...
-  super_strzelanka.vcxproj -> D:\Infa_dysk_D\PWAG\Prodzekt\super_strzelanka\x64\Debug\super_strzelanka.exe
+﻿  GunClass.cpp
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\GunClass.cpp(20,99): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\GunClass.cpp(20,65): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\GunClass.cpp(20,31): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+  super_strzelanka.vcxproj -> D:\Witek\@magisterka\@sem2\PWAG\repo\x64\Debug\super_strzelanka.exe

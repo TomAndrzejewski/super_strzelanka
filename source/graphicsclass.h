@@ -31,6 +31,7 @@ const float SCREEN_NEAR = 0.1f;
 #include "WallClass.h"
 #include "PlayerClass.h"
 #include "positionclass.h"
+#include "GunClass.h"
 
 #include <debugapi.h>
 #include "BufferHelpers.h"
@@ -75,6 +76,7 @@ public:
 	void RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMatrix);
 	void RenderWalls(vector<WallClass>& walls, vector<XMFLOAT4>& colorsOfWalls, XMMATRIX& viewMatrix);
 	void RenderCollisionBoxes();
+	void RenderGun(XMMATRIX& viewMatrix);
 	XMMATRIX& ProcessPlayerCollision(PositionClass* positionClass);
 
 private:
@@ -82,6 +84,7 @@ private:
 	CameraClass* m_Camera;
 	TextClass* m_Text;
 	SimpleModelClass* m_EnemyModel;
+	SimpleModelClass* m_Gun1Model;
 	SimpleModelClass* m_WallModel;
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;
@@ -92,6 +95,7 @@ private:
 	vector<XMFLOAT4> m_WallColors;
 	PlayerClass m_Player;
 	BBoxCollisionClass m_EndingAreaBBox;
+	GunClass m_Gun;
 
 	std::unique_ptr<DirectX::CommonStates> m_states;
 	std::unique_ptr<DirectX::BasicEffect> m_effect;
