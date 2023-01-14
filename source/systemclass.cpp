@@ -10,6 +10,7 @@ SystemClass::SystemClass()
 	m_Graphics = 0;
 	m_Timer = 0;
 	m_Position = 0;
+	m_GameFlow = 0;
 }
 
 
@@ -87,6 +88,12 @@ bool SystemClass::Initialize()
 		return false;
 	}
 
+	m_GameFlow = new GameFlowClass;
+	if (!m_GameFlow)
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -121,6 +128,12 @@ void SystemClass::Shutdown()
 		m_Input->Shutdown();
 		delete m_Input;
 		m_Input = 0;
+	}
+
+	if (m_GameFlow)
+	{
+		delete m_GameFlow;
+		m_GameFlow = 0;
 	}
 
 	// Shutdown the window.
@@ -195,43 +208,84 @@ bool SystemClass::Frame()
 		return false;
 	}
 
-	// Set the frame time for calculating the updated position.
-	m_Position->SetFrameTime(m_Timer->GetTime());
-
-	m_Input->GetMouseDelta(mouseDeltaX, mouseDeltaY);
-	m_Position->RotateY(mouseDeltaX);
-	m_Position->RotateX(mouseDeltaY);
-
-	keyDown = m_Input->IsWPressed();
-	m_Position->MoveForward(keyDown);
-
-	keyDown = m_Input->IsSPressed();
-	m_Position->MoveBackward(keyDown);
-
-	keyDown = m_Input->IsAPressed();
-	m_Position->MoveLeft(keyDown);
-
-	keyDown = m_Input->IsDPressed();
-	m_Position->MoveRight(keyDown);
-
-	// Get the current view point rotation.
-	m_Position->GetRotation(rotationY, rotationX);
-
-	m_Position->GetPosition(positionZ, positionX);
-
-	// Do the frame processing for the graphics object.
-	result = m_Graphics->Frame(rotationY, rotationX, positionZ, positionX);
-	if(!result)
+	if (m_GameFlow->GetGameState() == InitialMenu)
 	{
-		return false;
-	}
+		keyDown = m_Input->IsWPressed();
+		if (keyDown)
+			m_CurrentOption--;
 
-	// Finally render the graphics to the screen.
-	result = m_Graphics->Render(m_Position);
-	if(!result)
-	{
-		return false;
+		keyDown = m_Input->IsSPressed();
+		if (keyDown)
+			m_CurrentOption++;
+
+		if (m_CurrentOption > menuOptionsNo - 1)
+			m_CurrentOption = menuOptionsNo - 1;
+		if (m_CurrentOption < 0)
+			m_CurrentOption = 0;
+
+		keyDown = m_Input->IsEnterPressed();
+		if (keyDown)
+		{
+			m_Graphics->SetCurrentGun(m_CurrentOption);
+			m_GameFlow->m_GameState = ShootingPhase;
+		}
+
+		m_Position->GetRotation(rotationY, rotationX);
+		m_Position->GetPosition(positionZ, positionX);
+
+		result = m_Graphics->Frame(rotationY, rotationX, positionZ, positionX);
+		if (!result)
+		{
+			return false;
+		}
+
+		bool result = m_Graphics->RenderMenu(m_CurrentOption);
+		if (!result)
+		{
+			return false;
+		}
 	}
+	else
+	{
+		// Set the frame time for calculating the updated position.
+		m_Position->SetFrameTime(m_Timer->GetTime());
+
+		m_Input->GetMouseDelta(mouseDeltaX, mouseDeltaY);
+		m_Position->RotateY(mouseDeltaX);
+		m_Position->RotateX(mouseDeltaY);
+
+		keyDown = m_Input->IsWPressed();
+		m_Position->MoveForward(keyDown);
+
+		keyDown = m_Input->IsSPressed();
+		m_Position->MoveBackward(keyDown);
+
+		keyDown = m_Input->IsAPressed();
+		m_Position->MoveLeft(keyDown);
+
+		keyDown = m_Input->IsDPressed();
+		m_Position->MoveRight(keyDown);
+
+		// Get the current view point rotation.
+		m_Position->GetRotation(rotationY, rotationX);
+
+		m_Position->GetPosition(positionZ, positionX);
+
+		// Do the frame processing for the graphics object.
+		result = m_Graphics->Frame(rotationY, rotationX, positionZ, positionX);
+		if (!result)
+		{
+			return false;
+		}
+
+		// Finally render the graphics to the screen.
+		result = m_Graphics->Render(m_Position);
+		if (!result)
+		{
+			return false;
+		}
+	}
+	
 
 	return true;
 }

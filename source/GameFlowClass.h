@@ -2,7 +2,7 @@
 
 #include "EnemyClass.h"
 
-enum class GameState
+enum GameState
 {
 	InitialMenu,
 	ShootingPhase
@@ -10,12 +10,14 @@ enum class GameState
 
 class GameFlowClass
 {
+public:
 	GameFlowClass();
 	~GameFlowClass();
 
 	void StartShootingPhase(vector<EnemyClass>& enemies);
-
-private:
+	GameState GetGameState();
 	GameState m_GameState;
+
+	
 };
 

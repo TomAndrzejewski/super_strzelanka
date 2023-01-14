@@ -9,8 +9,9 @@ TextClass::TextClass()
 {
 	m_Font = 0;
 	m_FontShader = 0;
-
 	m_sentence1 = 0;
+	m_menuSentences[0] = 0;
+	m_menuSentences[1] = 0;
 }
 
 
@@ -68,16 +69,44 @@ bool TextClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 		return false;
 	}
 
+	//// Initialize the first sentence.
+	//result = InitializeSentence(&m_sentence1, 32, device);
+	//if(!result)
+	//{
+	//	return false;
+	//}
+
+	//// Now update the sentence vertex buffer with the new string information.
+	//result = UpdateSentence(m_sentence1, (char*)"Render Count: ", 20, 20, 1.0f, 1.0f, 1.0f, deviceContext);
+	//if(!result)
+	//{
+	//	return false;
+	//}
+
 	// Initialize the first sentence.
-	result = InitializeSentence(&m_sentence1, 32, device);
-	if(!result)
+	result = InitializeSentence(&m_menuSentences[0], 32, device);
+	if (!result)
 	{
 		return false;
 	}
 
 	// Now update the sentence vertex buffer with the new string information.
-	result = UpdateSentence(m_sentence1, (char*)"Render Count: ", 20, 20, 1.0f, 1.0f, 1.0f, deviceContext);
-	if(!result)
+	result = UpdateSentence(m_menuSentences[0], (char*)"GUN 1", screenWidth/2, 100, 1.0f, 1.0f, 1.0f, deviceContext);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Initialize the first sentence.
+	result = InitializeSentence(&m_menuSentences[1], 32, device);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Now update the sentence vertex buffer with the new string information.
+	result = UpdateSentence(m_menuSentences[1], (char*)"GUN 2", screenWidth / 2, 150, 1.0f, 1.0f, 1.0f, deviceContext);
+	if (!result)
 	{
 		return false;
 	}
@@ -89,7 +118,9 @@ bool TextClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 void TextClass::Shutdown()
 {
 	// Release the first sentence.
-	ReleaseSentence(&m_sentence1);
+	//ReleaseSentence(&m_sentence1);
+	ReleaseSentence(&m_menuSentences[0]);
+	ReleaseSentence(&m_menuSentences[1]);
 
 	// Release the font shader object.
 	if(m_FontShader)
@@ -117,8 +148,20 @@ bool TextClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix,
 
 
 	// Draw the first sentence.
-	result = RenderSentence(deviceContext, m_sentence1, worldMatrix, orthoMatrix);
-	if(!result)
+	//result = RenderSentence(deviceContext, m_sentence1, worldMatrix, orthoMatrix);
+	//if(!result)
+	//{
+	//	return false;
+	//}
+
+	result = RenderSentence(deviceContext, m_menuSentences[0], worldMatrix, orthoMatrix);
+	if (!result)
+	{
+		return false;
+	}
+
+	result = RenderSentence(deviceContext, m_menuSentences[1], worldMatrix, orthoMatrix);
+	if (!result)
 	{
 		return false;
 	}
@@ -383,4 +426,17 @@ bool TextClass::SetRenderCount(int count, ID3D11DeviceContext* deviceContext)
 	}
 
 	return true;
+}
+
+void TextClass::SetActiveMenuOption(int index)
+{
+	for (int i = 0; i < menuOptionsNo; i++)
+	{
+		m_menuSentences[i]->red = 1.0f;
+		m_menuSentences[i]->green = 1.0f;
+		m_menuSentences[i]->blue = 1.0f;
+	}
+	m_menuSentences[index]->red = 1.0f;
+	m_menuSentences[index]->green = 1.0f;
+	m_menuSentences[index]->blue = 0.0f;
 }

@@ -22,12 +22,15 @@ GraphicsClass::GraphicsClass()
 	m_Camera = 0;
 	m_Text = 0;
 	m_EnemyModel = 0;
-	m_Gun1Model = 0;
 	m_WallModel = 0;
 	m_LightShader = 0;
 	m_Light = 0;
 	m_ModelList = 0;
 	m_Frustum = 0;
+	m_Bitmap = 0;
+	m_TextureShader = 0;
+	m_GunModels[0] = 0;
+	m_GunModels[1] = 0;
 }
 
 
@@ -94,19 +97,20 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Create the WallModel object.
-	m_WallModel = new SimpleModelClass;
+	m_WallModel = new MultiTextureModelClass;
 	if (!m_WallModel)
 	{
 		return false;
 	}
 
 	// Initialize the WallModel object.
-	result = m_WallModel->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), (WCHAR*)WALL_TEXTURE_FILENAME, WALL_MODEL_FILENAME);
+	result = m_WallModel->Initialize(m_D3D->GetDevice(), WALL_MODEL_FILENAME, (WCHAR*)WALL_TEXTURE_FILENAME, (WCHAR*)BRICK_TEXTURE_FILENAME);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
+
 
 	// Initialize WallList
 	for (int i = 0; i < sizeOf_walls; i++)
@@ -135,14 +139,14 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 
 	// Create the text object.
-	m_EnemyModel = new SimpleModelClass;
+	m_EnemyModel = new MultiTextureModelClass;
 	if (!m_EnemyModel)
 	{
 		return false;
 	}
 
 	// Initialize the model object.
-	result = m_EnemyModel->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), (WCHAR*)CUBE_TEXTURE_FILENAME, CUBE_MODEL_FILENAME);
+	result = m_EnemyModel->Initialize(m_D3D->GetDevice(), CUBE_MODEL_FILENAME, (WCHAR*)CUBE_TEXTURE_FILENAME, (WCHAR*)CUBE_TEXTURE_FILENAME);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -150,14 +154,28 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Create the text object.
-	m_Gun1Model = new SimpleModelClass;
-	if (!m_Gun1Model)
+	m_GunModels[0] = new MultiTextureModelClass;
+	if (!m_GunModels[0])
 	{
 		return false;
 	}
 
 	// Initialize the gun model object.
-	result = m_Gun1Model->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), (WCHAR*)GUN1_TEXTURE_FILENAME, GUN1_MODEL_FILENAME);
+	result = m_GunModels[0]->Initialize(m_D3D->GetDevice(), GUN1_MODEL_FILENAME, (WCHAR*)GUN1_TEXTURE_FILENAME, (WCHAR*)GUN1_TEXTURE_FILENAME);
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	m_GunModels[1] = new MultiTextureModelClass;
+	if (!m_GunModels[1])
+	{
+		return false;
+	}
+
+	// Initialize the gun model object.
+	result = m_GunModels[1]->Initialize(m_D3D->GetDevice(), GUN2_MODEL_FILENAME, (WCHAR*)GUN2_TEXTURE_FILENAME, (WCHAR*)GUN2_TEXTURE_FILENAME);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -212,6 +230,21 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+	// Create the light shader object.
+	m_TextureShader = new TextureShaderClass();
+	if (!m_TextureShader)
+	{
+		return false;
+	}
+
+	// Initialize the light shader object.
+	result = m_TextureShader->Initialize(m_D3D->GetDevice(), hwnd);
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the texture shader object.", L"Error", MB_OK);
+		return false;
+	}
+
 	// Create the light object.
 	m_Light = new LightClass;
 	if(!m_Light)
@@ -262,12 +295,35 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 	m_batch = std::make_unique<PrimitiveBatch<VertexType>>(m_D3D->GetDeviceContext());
 
+	// Create the bitmap object.
+	m_Bitmap = new BitmapClass;
+	if (!m_Bitmap)
+	{
+		return false;
+	}
+
+	// Initialize the bitmap object.
+	result = m_Bitmap->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), screenWidth, screenHeight, (WCHAR*)MENU_TEXTURE_FILENAME, screenWidth, screenHeight);
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the bitmap object.", L"Error", MB_OK);
+		return false;
+	}
+
 	return true;
 }
 
 
 void GraphicsClass::Shutdown()
 {
+	// Release the bitmap object.
+	if (m_Bitmap)
+	{
+		m_Bitmap->Shutdown();
+		delete m_Bitmap;
+		m_Bitmap = 0;
+	}
+
 	// Release the frustum object.
 	if(m_Frustum)
 	{
@@ -357,10 +413,10 @@ bool GraphicsClass::Frame(float rotationY, float rotationX, float positionZ, flo
 	return true;
 }
 
-
 bool GraphicsClass::Render(PositionClass* positionClass)
 {
-	XMMATRIX viewMatrix;
+	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
+
 	XMFLOAT4 color;
 	bool result;
 
@@ -376,9 +432,10 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 
 	ProcessShootingCollision();
 
-	RenderEnemies(m_EnemyList, viewMatrix);
 
 	RenderWalls(m_WallList, m_WallColors, viewMatrix);
+
+	RenderEnemies(m_EnemyList, viewMatrix);
 
 	if (drawCollisionBBoxes)
 	{
@@ -387,26 +444,29 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 
 	RenderGun(viewMatrix);
 
+	// Present the rendered scene to the screen.
+	m_D3D->EndScene();
+
+	return true;
+
+
 	// HERE IS TEXT RENDERING //
 	// Set the number of models that was actually rendered this frame.
-	result = m_Text->SetRenderCount(0, m_D3D->GetDeviceContext());
+	/*result = m_Text->SetRenderCount(0, m_D3D->GetDeviceContext());
 	if(!result)
 	{
 		return false;
-	}
-
-	// Turn off the Z buffer to begin all 2D rendering.
-	m_D3D->TurnZBufferOff();
+	}*/
 
 	// Turn on the alpha blending before rendering the text.
 	m_D3D->TurnOnAlphaBlending();
 
 	// Render the text strings.
-	result = m_Text->Render(m_D3D->GetDeviceContext(), m_D3D->GetWorldMatrix(), m_D3D->GetOrthoMatrix());
+	/*result = m_Text->Render(m_D3D->GetDeviceContext(), m_D3D->GetWorldMatrix(), m_D3D->GetOrthoMatrix());
 	if(!result)
 	{
 		return false;
-	}
+	}*/
 
 	// Turn off alpha blending after rendering the text.
 	m_D3D->TurnOffAlphaBlending();
@@ -416,6 +476,81 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 
 	// Present the rendered scene to the screen.
 	m_D3D->EndScene();
+
+	return true;
+}
+
+bool GraphicsClass::RenderMenu(int activeOption)
+{
+	XMMATRIX orthoMatrix, viewMatrix;
+	bool result;
+
+	// Clear the buffers to begin the scene.
+	m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+
+	m_Camera->Render();
+	viewMatrix = m_Camera->GetViewMatrix();
+
+	m_D3D->GetOrthoMatrix(orthoMatrix);
+
+	m_D3D->TurnOnAlphaBlending();
+	// Turn off the Z buffer to begin all 2D rendering.
+	m_D3D->TurnZBufferOff();
+
+	// Put the bitmap vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	result = m_Bitmap->Render(m_D3D->GetDeviceContext(), 0, 0);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Render the bitmap with the texture shader.
+	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_Bitmap->GetIndexCount(), m_D3D->GetWorldMatrix(), viewMatrix, orthoMatrix, m_Bitmap->GetTexture());
+	if (!result)
+	{
+		return false;
+	}
+
+	m_Text->SetActiveMenuOption(activeOption);
+
+	result = RenderText();
+	if (!result)
+	{
+		return false;
+	}
+
+	//for (int i = 0; i < textDatasLength; i++)
+	//{
+	//	result = RenderText(textDatas[i]);
+	//	if (!result)
+	//	{
+	//		return false;
+	//	}
+	//}
+
+
+	// Turn off alpha blending after rendering the text.
+	m_D3D->TurnOffAlphaBlending();
+
+	// Turn the Z buffer back on now that all 2D rendering has completed.
+	m_D3D->TurnZBufferOn();
+
+	// Present the rendered scene to the screen.
+	m_D3D->EndScene();
+
+
+	return true;
+}
+
+bool GraphicsClass::RenderText()
+{
+	bool result;
+
+	result = m_Text->Render(m_D3D->GetDeviceContext(), m_D3D->GetWorldMatrix(), m_D3D->GetOrthoMatrix());
+	if (!result)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -514,6 +649,11 @@ XMMATRIX& GraphicsClass::ProcessPlayerCollision(PositionClass* positionClass)
 	return m_Camera->GetViewMatrix();
 }
 
+void GraphicsClass::SetCurrentGun(int index)
+{
+	m_Gun.SetModel(m_GunModels[index]);
+}
+
 void GraphicsClass::RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMatrix)
 {
 	// Go through all the enemies
@@ -537,7 +677,7 @@ void GraphicsClass::RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMat
 
 		// Render the model using the light shader.
 		m_LightShader->Render(m_D3D->GetDeviceContext(), pEnemy->GetModel()->GetIndexCount(), worldMatrix, viewMatrix, m_D3D->GetProjectionMatrix(),
-			pEnemy->GetModel()->GetTexture(), m_Light->GetDirection(), color);
+			pEnemy->GetModel()->GetTextureArray(), m_Light->GetDirection(), color);
 	}
 }
 
@@ -558,7 +698,7 @@ void GraphicsClass::RenderWalls(vector<WallClass>& walls, vector<XMFLOAT4>& colo
 
 		// Render the model using the light shader.
 		m_LightShader->Render(m_D3D->GetDeviceContext(), pWall->GetModel()->GetIndexCount(), worldMatrix, viewMatrix, m_D3D->GetProjectionMatrix(),
-			pWall->GetModel()->GetTexture(), m_Light->GetDirection(), color);
+			pWall->GetModel()->GetTextureArray(), m_Light->GetDirection(), color);
 	}
 }
 
@@ -606,10 +746,10 @@ void GraphicsClass::RenderGun(XMMATRIX& viewMatrix)
 	m_Gun.SetRelativePositionAndRotation(playerPos, playerRot);
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	m_Gun1Model->Render(m_D3D->GetDeviceContext());
+	m_Gun.GetModel()->Render(m_D3D->GetDeviceContext());
 
 	//// Render the model using the light shader.
-	m_LightShader->Render(m_D3D->GetDeviceContext(), m_Gun1Model->GetIndexCount(), m_Gun.GetModelToWorldMatrix(), viewMatrix, m_D3D->GetProjectionMatrix(),
-		m_Gun1Model->GetTexture(), m_Light->GetDirection(), XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f));
+	m_LightShader->Render(m_D3D->GetDeviceContext(), m_Gun.GetModel()->GetIndexCount(), m_Gun.GetModelToWorldMatrix(), viewMatrix, m_D3D->GetProjectionMatrix(),
+		m_Gun.GetModel()->GetTextureArray(), m_Light->GetDirection(), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	
 }

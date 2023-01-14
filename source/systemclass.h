@@ -24,6 +24,7 @@
 #include "graphicsclass.h"
 #include "timerclass.h"
 #include "positionclass.h"
+#include "GameFlowClass.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,6 +57,9 @@ private:
 	GraphicsClass* m_Graphics;
 	TimerClass* m_Timer;
 	PositionClass* m_Position;
+	GameFlowClass* m_GameFlow;
+
+	int m_CurrentOption;
 };
 
 

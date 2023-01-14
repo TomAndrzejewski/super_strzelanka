@@ -6,7 +6,7 @@
 /////////////
 // GLOBALS //
 /////////////
-Texture2D shaderTexture;
+Texture2D shaderTextures[2];
 SamplerState SampleType;
 
 cbuffer LightBuffer
@@ -32,14 +32,24 @@ struct PixelInputType
 ////////////////////////////////////////////////////////////////////////////////
 float4 LightPixelShader(PixelInputType input) : SV_TARGET
 {
-	float4 textureColor;
+	float4 color1;
+    float4 color2;
+    float4 blendColor;
+	float4 lightColor;
 	float3 lightDir;
 	float lightIntensity;
-	float4 color;
 	
+    // Get the pixel color from the first texture.
+    color1 = shaderTextures[0].Sample(SampleType, input.tex);
 
-	// Sample the texture pixel at this location.
-	textureColor = shaderTexture.Sample(SampleType, input.tex);
+    // Get the pixel color from the second texture.
+    color2 = shaderTextures[1].Sample(SampleType, input.tex);
+
+    // Blend the two pixels together and multiply by the gamma value.
+    blendColor = color1 * color2 * 2.0;
+    
+    // Saturate the color.
+    blendColor = saturate(blendColor);
 	
 	// Invert the light direction for calculations.
 	lightDir = -lightDirection;
@@ -48,12 +58,13 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
 	lightIntensity = saturate(dot(input.normal, lightDir));
 
 	// Determine the final diffuse color based on the diffuse color and the amount of light intensity.
-	color = saturate(diffuseColor * lightIntensity);
+	lightColor = diffuseColor + saturate(diffuseColor * lightIntensity);
+	//lightColor = saturate(lightIntensity);
 
 	// Multiply the texture pixel and the input color to get the final result.
-	//color = color * textureColor;
-	color = textureColor;
-	//color = diffuseColor;
+	lightColor = lightColor * blendColor;
+	//lightColor = blendColor;
+	//lightColor = diffuseColor;
 	
-	return color;
+	return lightColor;
 }

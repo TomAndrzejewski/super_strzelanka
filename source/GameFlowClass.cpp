@@ -22,3 +22,8 @@ void GameFlowClass::StartShootingPhase(vector<EnemyClass>& enemies)
 		it->PlayerStarted();
 	}
 }
+
+GameState GameFlowClass::GetGameState()
+{
+	return m_GameState;
+}

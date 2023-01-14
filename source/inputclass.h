@@ -43,6 +43,7 @@ public:
 	bool IsDPressed();
 	bool IsWPressed();
 	bool IsSPressed();
+	bool IsEnterPressed();
 
 	void GetMouseLocation(int&, int&);
 	void GetMouseDelta(int&, int&);

@@ -22,3 +22,13 @@ void GunClass::SetRelativePositionAndRotation(XMFLOAT3 pos, XMFLOAT3 rot)
 	SetPos(pos + posOffset);
 	SetRot(rot + m_rot);
 }
+
+void GunClass::SetModel(MultiTextureModelClass* newModel)
+{
+	m_model = newModel;
+}
+
+MultiTextureModelClass* GunClass::GetModel()
+{
+	return m_model;
+}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SimpleModelClass.h"
+#include "MultiTextureModelClass.h"
 #include "ModelToWorldClass.h"
 #include "BBoxCollisionClass.h"
 
@@ -18,13 +18,13 @@ public:
 	void SetColor(XMFLOAT4 color) { m_color = color; }
 	XMFLOAT4 GetColor() { return m_color; }
 
-	SimpleModelClass* GetModel() { return m_model; }
-	bool SetModel(SimpleModelClass* model) { if (model == nullptr) return false;	else { m_model = model; return true; } }
+	MultiTextureModelClass* GetModel() { return m_model; }
+	bool SetModel(MultiTextureModelClass* model) { if (model == nullptr) return false;	else { m_model = model; return true; } }
 
 	BBoxCollisionClass& GetBBox() { return m_BBox; }
 
 private:
-	SimpleModelClass* m_model;
+	MultiTextureModelClass* m_model;
 	BBoxCollisionClass m_BBox;
 	XMFLOAT4 m_color;
 };

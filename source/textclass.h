@@ -9,6 +9,7 @@
 ///////////////////////
 #include "fontclass.h"
 #include "fontshaderclass.h"
+#include "CommonConsts.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -40,6 +41,7 @@ public:
 	bool Render(ID3D11DeviceContext*, XMMATRIX, XMMATRIX);
 
 	bool SetRenderCount(int, ID3D11DeviceContext*);
+	void SetActiveMenuOption(int);
 
 private:
 	bool InitializeSentence(SentenceType**, int, ID3D11Device*);
@@ -53,6 +55,7 @@ private:
 	int m_screenWidth, m_screenHeight;
 	XMMATRIX m_baseViewMatrix;
 	SentenceType* m_sentence1;
+	SentenceType* m_menuSentences[menuOptionsNo];
 };
 
 #endif

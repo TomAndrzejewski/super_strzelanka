@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BBoxCollisionClass.h"
-#include "SimpleModelClass.h"
+#include "MultiTextureModelClass.h"
 #include <vector>
 
 using std::vector;
@@ -31,12 +31,12 @@ public:
 	BBoxCollisionClass& GetBBox(size_t index) { return m_BBoxList.at(index); }
 	vector<BBoxCollisionClass>* GetBBoxList() { return &m_BBoxList; }
 
-	SimpleModelClass* GetModel() { return m_model; }
-	bool SetModel(SimpleModelClass* model) { if (model == nullptr) return false;	else { m_model = model; return true; } }
+	MultiTextureModelClass* GetModel() { return m_model; }
+	bool SetModel(MultiTextureModelClass* model) { if (model == nullptr) return false;	else { m_model = model; return true; } }
 
 private:
 	vector<BBoxCollisionClass> m_BBoxList;
-	SimpleModelClass* m_model;
+	MultiTextureModelClass* m_model;
 	XMFLOAT3 m_CollModelPos;
 };
 

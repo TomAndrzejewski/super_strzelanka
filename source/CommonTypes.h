@@ -11,3 +11,10 @@ struct ModelOrganizerStruct
 	XMFLOAT3 rot;
 	XMFLOAT3 scale;
 };
+
+struct TextData
+{
+	char* text;
+	XMFLOAT2 pos;
+	XMFLOAT3 col = XMFLOAT3(1.0f,1.0f,1.0f);
+};

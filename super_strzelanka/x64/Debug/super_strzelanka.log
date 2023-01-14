@@ -1,5 +1,11 @@
-﻿  GunClass.cpp
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\GunClass.cpp(20,99): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\GunClass.cpp(20,65): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\GunClass.cpp(20,31): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+﻿  graphicsclass.cpp
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(137,64): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(137,52): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(137,40): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(421,7): warning C4101: "result": lokalna zmienna, do której nie istnieje odwołanie
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(418,36): warning C4101: "projectionMatrix": lokalna zmienna, do której nie istnieje odwołanie
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(418,54): warning C4101: "orthoMatrix": lokalna zmienna, do której nie istnieje odwołanie
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(418,11): warning C4101: "worldMatrix": lokalna zmienna, do której nie istnieje odwołanie
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(420,11): warning C4101: "color": lokalna zmienna, do której nie istnieje odwołanie
+D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(743,33): warning C4101: "posOffset": lokalna zmienna, do której nie istnieje odwołanie
   super_strzelanka.vcxproj -> D:\Witek\@magisterka\@sem2\PWAG\repo\x64\Debug\super_strzelanka.exe

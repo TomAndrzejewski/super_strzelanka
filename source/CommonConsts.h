@@ -18,16 +18,19 @@ const bool playerCollisionON = true;
 #define LIGHT_VS_SHADER_FILENAME		L"../Engine/light.vs"
 #define LIGHT_PS_SHADER_FILENAME		L"../Engine/light.ps"
 
+#define TEXTURE_VS_SHADER_FILENAME		L"../Engine/texture.vs"
+#define TEXTURE_PS_SHADER_FILENAME		L"../Engine/texture.ps"
 
 // TEXTURES AND MODELS //
 #define SPHERE_MODEL_FILENAME			(char*)"../Engine/data/sphere.txt"
 const WCHAR SPHERE_TEXTURE_FILENAME[] =	L"../Engine/data/seafloor.dds";
 
-#define CUBE_MODEL_FILENAME				(char*)"../Engine/data/cube.txt"
+#define CUBE_MODEL_FILENAME				(char*)"../Engine/data/monkey.txt"
 const WCHAR CUBE_TEXTURE_FILENAME[] =	L"../Engine/data/seafloor.dds";
 
 #define WALL_MODEL_FILENAME				(char*)"../Engine/data/indoor_wall_2D.txt"
 const WCHAR WALL_TEXTURE_FILENAME[] =	L"../Engine/data/seafloor.dds";
+const WCHAR BRICK_TEXTURE_FILENAME[] = L"../Engine/data/bricks.dds";
 #define WALL_BBOX_FILENAME				(char*)"../Engine/data/indoor_wall_2D_bbox.txt"
 
 #define FONT_MODEL_FILENAME				(char*)"../Engine/data/fontdata.txt"
@@ -35,6 +38,11 @@ const WCHAR FONT_TEXTURE_FILENAME[] =	L"../Engine/data/font.dds";
 
 #define GUN1_MODEL_FILENAME			(char*)"../Engine/data/gun11.txt"
 const WCHAR GUN1_TEXTURE_FILENAME[] = L"../Engine/data/gun1.dds";
+
+#define GUN2_MODEL_FILENAME			(char*)"../Engine/data/gun3.txt"
+const WCHAR GUN2_TEXTURE_FILENAME[] = L"../Engine/data/gun3.dds";
+
+const WCHAR MENU_TEXTURE_FILENAME[] = L"../Engine/data/menuTexture.dds";
 
 
 // SIMPLE CUBE ENEMY MODEL //
@@ -44,8 +52,12 @@ const string simpleCubeBBoxFiles[SIMPLE_CUBE_BBOX_NUMBER] = { "../Engine/data/cu
 
 // ALL ENEMY MODELS //
 const float playerYLevel = -5.0f;
-const float enemyHeight = 8.0f;
-const float enemyWidth = 4.0f;
+const float enemyHeight = 5.0f;
+const float enemyWidth = 5.0f;
+
+// MENU //
+const int menuOptionsNo = 2;
+const int availableGunsNo = 2;
 
 const ModelOrganizerStruct enemies[] = { { XMFLOAT3(-50.0f, -enemyHeight, 700.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },
 										 { XMFLOAT3(300.0f, -enemyHeight, 700.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(enemyWidth, enemyHeight, enemyWidth) },

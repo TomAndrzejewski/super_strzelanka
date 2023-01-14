@@ -22,6 +22,7 @@ const float SCREEN_NEAR = 0.1f;
 #include "d3dclass.h"
 #include "cameraclass.h"
 #include "textclass.h"
+#include "bitmapclass.h"
 #include "SimpleModelClass.h"
 #include "lightshaderclass.h"
 #include "lightclass.h"
@@ -32,6 +33,9 @@ const float SCREEN_NEAR = 0.1f;
 #include "PlayerClass.h"
 #include "positionclass.h"
 #include "GunClass.h"
+#include "textureshaderclass.h"
+#include "CommonTypes.h"
+#include "multitexturemodelclass.h"
 
 #include <debugapi.h>
 #include "BufferHelpers.h"
@@ -71,6 +75,7 @@ public:
 	void Shutdown();
 	bool Frame(float, float, float, float);
 	bool Render(PositionClass* positionClass);
+	bool RenderMenu(int);
 
 	void ProcessShootingCollision();
 	void RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMatrix);
@@ -78,14 +83,15 @@ public:
 	void RenderCollisionBoxes();
 	void RenderGun(XMMATRIX& viewMatrix);
 	XMMATRIX& ProcessPlayerCollision(PositionClass* positionClass);
+	void SetCurrentGun(int);
 
 private:
 	D3DClass* m_D3D;
 	CameraClass* m_Camera;
 	TextClass* m_Text;
-	SimpleModelClass* m_EnemyModel;
-	SimpleModelClass* m_Gun1Model;
-	SimpleModelClass* m_WallModel;
+	MultiTextureModelClass* m_EnemyModel;
+	MultiTextureModelClass* m_GunModels[availableGunsNo];
+	MultiTextureModelClass* m_WallModel;
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;
 	ModelListClass* m_ModelList;
@@ -96,11 +102,15 @@ private:
 	PlayerClass m_Player;
 	BBoxCollisionClass m_EndingAreaBBox;
 	GunClass m_Gun;
+	BitmapClass* m_Bitmap;
+	TextureShaderClass* m_TextureShader;
 
 	std::unique_ptr<DirectX::CommonStates> m_states;
 	std::unique_ptr<DirectX::BasicEffect> m_effect;
 	std::unique_ptr<DirectX::PrimitiveBatch<VertexType>> m_batch;
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+
+	bool RenderText();
 };
 
 #endif
