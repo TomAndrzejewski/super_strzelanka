@@ -38,6 +38,8 @@ public:
 	void Shutdown();
 	bool Frame();
 
+	bool IsLPMPressed();
+
 	bool IsEscapePressed();
 	bool IsAPressed();
 	bool IsDPressed();

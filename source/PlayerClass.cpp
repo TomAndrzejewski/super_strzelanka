@@ -40,9 +40,9 @@ void PlayerClass::RememberLastPosAndRot(const XMFLOAT3& pos, const XMFLOAT3& rot
 			m_LastPos = posFiveFramesBack[readIndex];
 			m_LastRot = rotFiveFramesBack[readIndex];
 
-			char str[500];
-			sprintf_s(str, "posFiveFramesBack[readIndex]: %f %f %f\n rotFiveFramesBack[readIndex]: %f %f %f\n", posFiveFramesBack[readIndex].x, posFiveFramesBack[readIndex].y, posFiveFramesBack[readIndex].z, rotFiveFramesBack[readIndex].x, rotFiveFramesBack[readIndex].y, rotFiveFramesBack[readIndex].z);
-			OutputDebugStringA(str);
+			//char str[500];
+			//sprintf_s(str, "posFiveFramesBack[readIndex]: %f %f %f\n rotFiveFramesBack[readIndex]: %f %f %f\n", posFiveFramesBack[readIndex].x, posFiveFramesBack[readIndex].y, posFiveFramesBack[readIndex].z, rotFiveFramesBack[readIndex].x, rotFiveFramesBack[readIndex].y, rotFiveFramesBack[readIndex].z);
+			//OutputDebugStringA(str);
 
 			if (writeIndex == 1) { writeIndex = 0; }
 			else { writeIndex++; }
@@ -54,14 +54,14 @@ void PlayerClass::RememberLastPosAndRot(const XMFLOAT3& pos, const XMFLOAT3& rot
 		{
 			counterFromLastCollision++;
 			char str[500];
-			sprintf_s(str, "counterFromLastCollision: %d\n", counterFromLastCollision);
-			OutputDebugStringA(str);
+			//sprintf_s(str, "counterFromLastCollision: %d\n", counterFromLastCollision);
+			//OutputDebugStringA(str);
 
 			posFiveFramesBack[writeIndex] = pos;
 			//rotFiveFramesBack[writeIndex] = rot;
 
-			sprintf_s(str, "posFiveFramesBack[writeIndex]: %f %f %f\n", posFiveFramesBack[writeIndex].x, posFiveFramesBack[writeIndex].y, posFiveFramesBack[writeIndex].z);
-			OutputDebugStringA(str);
+			//sprintf_s(str, "posFiveFramesBack[writeIndex]: %f %f %f\n", posFiveFramesBack[writeIndex].x, posFiveFramesBack[writeIndex].y, posFiveFramesBack[writeIndex].z);
+			//OutputDebugStringA(str);
 
 			if (writeIndex == 1) { writeIndex = 0; }
 			else { writeIndex++; }

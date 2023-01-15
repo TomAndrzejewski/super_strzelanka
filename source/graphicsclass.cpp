@@ -7,6 +7,8 @@
 #include <SimpleMath.h>
 #include "BBoxCollisionClass.h"
 #include "DebugDraw.h"
+#include "inputclass.h"
+#include <chrono>
 
 #include <random>
 #include <iomanip>
@@ -413,8 +415,10 @@ bool GraphicsClass::Frame(float rotationY, float rotationX, float positionZ, flo
 	return true;
 }
 
-bool GraphicsClass::Render(PositionClass* positionClass)
+bool GraphicsClass::Render(PositionClass* positionClass, InputClass* inputClass)
 {
+	static auto start = std::chrono::high_resolution_clock::now();
+
 	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
 
 	XMFLOAT4 color;
@@ -431,7 +435,22 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 	// Process player collision if on
 	viewMatrix = (playerCollisionON) ? ProcessPlayerCollision(positionClass) : m_Camera->GetViewMatrix();
 
-	ProcessShootingCollision();
+	if (inputClass->IsLPMPressed())
+	{
+		auto finish = std::chrono::high_resolution_clock::now();
+
+		std::chrono::duration<double> elapsed = finish - start;
+
+		if (elapsed.count() >= shootingDelay)
+		{
+			char str[500];
+			sprintf_s(str, "DELAY STRZALU, %f\n", elapsed.count());
+			OutputDebugStringA(str);
+
+			start = std::chrono::high_resolution_clock::now();
+			ProcessShootingCollision();
+		}
+	}
 
 	RenderWalls(m_WallList, m_WallColors, viewMatrix);
 

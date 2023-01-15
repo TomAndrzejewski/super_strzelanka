@@ -108,3 +108,5 @@ const int sizeOf_walls = sizeof(walls) / sizeof(ModelOrganizerStruct);
 // GAME CONSTANTS
 const XMFLOAT3 startPos = XMFLOAT3(0.0f, 0.0f, -10.0f);
 const XMFLOAT3 startRot = XMFLOAT3(0.0f, 0.0f, 0.0f);
+
+const float shootingDelay = 0.5f;

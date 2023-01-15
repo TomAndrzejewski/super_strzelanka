@@ -1,37 +1,11 @@
-﻿  EnemyClass.cpp
-  GameFlowClass.cpp
-  GunClass.cpp
-  ModelToWorldClass.cpp
-  PlayerClass.cpp
-  PlayerCollisionClass.cpp
-  WallClass.cpp
-  fontshaderclass.cpp
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\fontshaderclass.cpp(298,42): warning C4244: "=": konwersja z "SIZE_T" do "unsigned long", możliwa utrata danych
-  graphicsclass.cpp
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(137,64): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(137,52): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(137,40): warning C4244: "argument": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(421,7): warning C4101: "result": lokalna zmienna, do której nie istnieje odwołanie
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(418,36): warning C4101: "projectionMatrix": lokalna zmienna, do której nie istnieje odwołanie
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(418,54): warning C4101: "orthoMatrix": lokalna zmienna, do której nie istnieje odwołanie
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(418,11): warning C4101: "worldMatrix": lokalna zmienna, do której nie istnieje odwołanie
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(420,11): warning C4101: "color": lokalna zmienna, do której nie istnieje odwołanie
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\graphicsclass.cpp(720,33): warning C4101: "posOffset": lokalna zmienna, do której nie istnieje odwołanie
-  lightshaderclass.cpp
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\lightshaderclass.cpp(309,42): warning C4244: "=": konwersja z "SIZE_T" do "unsigned long", możliwa utrata danych
-  main.cpp
-  positionclass.cpp
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\positionclass.cpp(158,37): warning C4244: "+=": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\positionclass.cpp(159,37): warning C4244: "+=": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\positionclass.cpp(190,38): warning C4244: "-=": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\positionclass.cpp(191,38): warning C4244: "-=": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\positionclass.cpp(222,34): warning C4244: "+=": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\positionclass.cpp(223,34): warning C4244: "-=": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\positionclass.cpp(252,35): warning C4244: "-=": konwersja z "double" do "float", możliwa utrata danych
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\positionclass.cpp(253,35): warning C4244: "+=": konwersja z "double" do "float", możliwa utrata danych
-  systemclass.cpp
-  textclass.cpp
-  textureshaderclass.cpp
-D:\Witek\@magisterka\@sem2\PWAG\repo\source\textureshaderclass.cpp(277,42): warning C4244: "=": konwersja z "SIZE_T" do "unsigned long", możliwa utrata danych
-  Generowanie kodu...
-  super_strzelanka.vcxproj -> D:\Witek\@magisterka\@sem2\PWAG\repo\x64\Debug\super_strzelanka.exe
+﻿  graphicsclass.cpp
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(139,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(139,52): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(139,40): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(425,7): warning C4101: 'result': unreferenced local variable
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(422,36): warning C4101: 'projectionMatrix': unreferenced local variable
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(422,54): warning C4101: 'orthoMatrix': unreferenced local variable
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(422,11): warning C4101: 'worldMatrix': unreferenced local variable
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(424,11): warning C4101: 'color': unreferenced local variable
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(739,33): warning C4101: 'posOffset': unreferenced local variable
+  super_strzelanka.vcxproj -> C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\x64\Debug\super_strzelanka.exe

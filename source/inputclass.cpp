@@ -221,6 +221,17 @@ void InputClass::ProcessInput()
 }
 
 
+bool InputClass::IsLPMPressed()
+{
+	if (m_mouseState.rgbButtons[0] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+
 bool InputClass::IsEscapePressed()
 {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.

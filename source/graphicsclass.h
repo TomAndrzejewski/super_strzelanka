@@ -10,7 +10,7 @@
 /////////////
 // GLOBALS //
 /////////////
-const bool FULL_SCREEN = false;
+const bool FULL_SCREEN = true;
 const bool VSYNC_ENABLED = true;
 const float SCREEN_DEPTH = 1000.0f;
 const float SCREEN_NEAR = 0.1f;
@@ -36,6 +36,7 @@ const float SCREEN_NEAR = 0.1f;
 #include "textureshaderclass.h"
 #include "CommonTypes.h"
 #include "multitexturemodelclass.h"
+#include "inputclass.h"
 
 #include <debugapi.h>
 #include "BufferHelpers.h"
@@ -58,6 +59,8 @@ const float SCREEN_NEAR = 0.1f;
 #include "VertexTypes.h"
 #include "WICTextureLoader.h"
 
+#include <chrono>
+
 using VertexType = DirectX::VertexPositionColor;
 
 
@@ -74,7 +77,7 @@ public:
 	bool Initialize(int, int, HWND);
 	void Shutdown();
 	bool Frame(float, float, float, float);
-	bool Render(PositionClass* positionClass);
+	bool Render(PositionClass* positionClass, InputClass* inputClass);
 	bool RenderMenu(int);
 
 	void ProcessShootingCollision();
@@ -110,6 +113,8 @@ private:
 	std::unique_ptr<DirectX::BasicEffect> m_effect;
 	std::unique_ptr<DirectX::PrimitiveBatch<VertexType>> m_batch;
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+
+	
 
 	bool RenderText();
 };
