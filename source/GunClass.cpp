@@ -13,13 +13,24 @@ GunClass::~GunClass()
 
 void GunClass::SetRelativePositionAndRotation(XMFLOAT3 pos, XMFLOAT3 rot)
 {
-	XMFLOAT3 posOffset;
-	float relativeRotationY = (90 - rot.y) * (3.14159265359f / 180.0f);
+	float posOffset;
 	float relativeRotationX = (90 - rot.x) * (3.14159265359f / 180.0f);
 
-	posOffset = XMFLOAT3(m_pos.x * cos(relativeRotationY), m_pos.y * cos(relativeRotationX), m_pos.z * sin(relativeRotationY));
+	posOffset = m_pos.y * cos(relativeRotationX);
 
-	SetPos(pos + posOffset);
+
+	float roationRad = (rot.y) * (3.14159265359f / 180.0f);
+	pos.z -= m_pos.x * sin(roationRad);
+	pos.x += m_pos.x * cos(roationRad);
+
+	roationRad = (90 - rot.y) * (3.14159265359f / 180.0f);
+
+	pos.z += m_pos.z * sin(roationRad);
+	pos.x += m_pos.z * cos(roationRad);
+
+	pos.y += posOffset;
+
+	SetPos(pos);
 	SetRot(rot + m_rot);
 }
 
