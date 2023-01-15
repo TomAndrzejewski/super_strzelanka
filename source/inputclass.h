@@ -44,6 +44,8 @@ public:
 	bool IsWPressed();
 	bool IsSPressed();
 	bool IsEnterPressed();
+	bool Is1Pressed();
+	bool Is2Pressed();
 
 	void GetMouseLocation(int&, int&);
 	void GetMouseDelta(int&, int&);

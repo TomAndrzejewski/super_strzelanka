@@ -284,6 +284,26 @@ bool InputClass::IsEnterPressed()
 	return false;
 }
 
+bool InputClass::Is1Pressed()
+{
+	if (m_keyboardState[DIK_1] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool InputClass::Is2Pressed()
+{
+	if (m_keyboardState[DIK_2] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 
 void InputClass::GetMouseLocation(int& mouseX, int& mouseY)
 {

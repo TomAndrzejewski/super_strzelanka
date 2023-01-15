@@ -424,6 +424,7 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 	// Clear the buffers to begin the scene.
 	m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
+
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
 
@@ -431,7 +432,6 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 	viewMatrix = (playerCollisionON) ? ProcessPlayerCollision(positionClass) : m_Camera->GetViewMatrix();
 
 	ProcessShootingCollision();
-
 
 	RenderWalls(m_WallList, m_WallColors, viewMatrix);
 
@@ -444,37 +444,6 @@ bool GraphicsClass::Render(PositionClass* positionClass)
 
 	RenderGun(viewMatrix);
 
-	// Present the rendered scene to the screen.
-	m_D3D->EndScene();
-
-	return true;
-
-
-	// HERE IS TEXT RENDERING //
-	// Set the number of models that was actually rendered this frame.
-	/*result = m_Text->SetRenderCount(0, m_D3D->GetDeviceContext());
-	if(!result)
-	{
-		return false;
-	}*/
-
-	// Turn on the alpha blending before rendering the text.
-	m_D3D->TurnOnAlphaBlending();
-
-	// Render the text strings.
-	/*result = m_Text->Render(m_D3D->GetDeviceContext(), m_D3D->GetWorldMatrix(), m_D3D->GetOrthoMatrix());
-	if(!result)
-	{
-		return false;
-	}*/
-
-	// Turn off alpha blending after rendering the text.
-	m_D3D->TurnOffAlphaBlending();
-
-	// Turn the Z buffer back on now that all 2D rendering has completed.
-	m_D3D->TurnZBufferOn();
-
-	// Present the rendered scene to the screen.
 	m_D3D->EndScene();
 
 	return true;
@@ -735,6 +704,14 @@ void GraphicsClass::RenderCollisionBoxes()
 	DX::Draw(m_batch.get(), m_EndingAreaBBox.GetBoundingOrientedBox(), Colors::White);
 
 	m_batch->End();
+}
+
+void GraphicsClass::SetWireFrame(bool on)
+{
+	if(on)
+		m_D3D->GetDeviceContext()->RSSetState(m_states->Wireframe());
+	else
+		m_D3D->GetDeviceContext()->RSSetState(m_states->CullCounterClockwise());
 }
 
 void GraphicsClass::RenderGun(XMMATRIX& viewMatrix)

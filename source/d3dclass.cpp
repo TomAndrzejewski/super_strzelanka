@@ -286,6 +286,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
+	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
 	// Setup the raster description which will determine how and what polygons will be drawn.
 	rasterDesc.AntialiasedLineEnable = false;
 	rasterDesc.CullMode = D3D11_CULL_BACK;
@@ -304,7 +305,6 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	{
 		return false;
 	}
-
 	// Now set the rasterizer state.
 	m_deviceContext->RSSetState(m_rasterState);
 	

@@ -247,6 +247,18 @@ bool SystemClass::Frame()
 	}
 	else
 	{
+		keyDown = m_Input->Is1Pressed();
+		if (keyDown)
+		{
+			m_Graphics->SetWireFrame(true);
+		}
+
+		keyDown = m_Input->Is2Pressed();
+		if (keyDown)
+		{
+			m_Graphics->SetWireFrame(false);
+		}
+
 		// Set the frame time for calculating the updated position.
 		m_Position->SetFrameTime(m_Timer->GetTime());
 

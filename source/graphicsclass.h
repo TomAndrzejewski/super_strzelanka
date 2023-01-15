@@ -81,6 +81,7 @@ public:
 	void RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMatrix);
 	void RenderWalls(vector<WallClass>& walls, vector<XMFLOAT4>& colorsOfWalls, XMMATRIX& viewMatrix);
 	void RenderCollisionBoxes();
+	void SetWireFrame(bool);
 	void RenderGun(XMMATRIX& viewMatrix);
 	XMMATRIX& ProcessPlayerCollision(PositionClass* positionClass);
 	void SetCurrentGun(int);
