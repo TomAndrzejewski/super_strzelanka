@@ -17,7 +17,7 @@ public:
 	MultiTextureModelClass* GetModel();
 
 private:
-	const XMFLOAT3 m_pos = XMFLOAT3(40.0f, -44.0f, 40.0f);
+	const XMFLOAT3 m_pos = XMFLOAT3(5.0f, -30.0f, 30.0f);
 	const XMFLOAT3 m_rot = XMFLOAT3(0.0f, -15.0f, 0.0f);
 	const XMFLOAT3 m_scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	MultiTextureModelClass* m_model;
