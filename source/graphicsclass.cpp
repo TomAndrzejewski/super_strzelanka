@@ -136,7 +136,16 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	std::uniform_real_distribution<> distr(0.3f, 1.0f);
 	for (int i = 0; i < sizeOf_walls; i++)
 	{
-		m_WallColors.push_back(XMFLOAT4(distr(eng), distr(eng), distr(eng), 1.0f));
+		if (i < sizeOf_walls - 2) //sciany
+		{
+			m_WallColors.push_back(XMFLOAT4(distr(eng), distr(eng), distr(eng), 1.0f));
+		}
+		else //podloga i sufit
+		{
+			m_WallColors.push_back(XMFLOAT4(0.7f, 0.5f, 0.5f, 1.0f));
+		}
+		
+		//m_WallColors.push_back(XMFLOAT4(0.9f, 0.5f, 0.5f, 1.0f));
 	}
 
 

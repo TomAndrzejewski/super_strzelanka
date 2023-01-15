@@ -77,11 +77,12 @@ const int sizeOf_enemies = sizeof(enemies) / sizeof(ModelOrganizerStruct);
 // ALL WALLS //
 const float mainSquareLen = 400.0f;
 const float mainSquareWidth = 400.0f;
-const float wallsHeight = 15.0f;
+const float wallsHeight = 30.0f;
 const XMFLOAT3 rot0 = XMFLOAT3(0.0f, -90.0f, 0.0f); // refer to rotation of wall number 0
 const XMFLOAT3 rot1 = XMFLOAT3(0.0f, 90.0f, 0.0f); // refer to rotation of wall number 1
 const XMFLOAT3 rot2 = XMFLOAT3(180.0f, 180.0f, 0.0f); // refer to rotation of wall number 2
 const XMFLOAT3 rot3 = XMFLOAT3(0.0f, 180.0f, 0.0f); // refer to rotation of wall number 3
+const XMFLOAT3 rotPodloga = XMFLOAT3(90.0f, 0.0f, 0.0f);
 
 const ModelOrganizerStruct walls[] = { { XMFLOAT3(-100.0f, playerYLevel, 350.0f), rot0, XMFLOAT3(mainSquareLen, wallsHeight, 1.0f) }, //0
 									  { XMFLOAT3(2*mainSquareWidth + (-100.0f), playerYLevel, 350.0f), rot1, XMFLOAT3(mainSquareLen, wallsHeight, 1.0f) }, //1
@@ -101,7 +102,9 @@ const ModelOrganizerStruct walls[] = { { XMFLOAT3(-100.0f, playerYLevel, 350.0f)
 									  { XMFLOAT3(-100.0f + (1 + 1 / 4.0f - 2 / 6.0f) * mainSquareLen, playerYLevel, 350.0f - (2 / 6.0f) * mainSquareLen), XMFLOAT3(0.0f, -45.0f, 0.0f), XMFLOAT3(mainSquareLen / 5, wallsHeight, 1.0f)}, //16
 									  { XMFLOAT3(-100.0f + (1 - 1 / 4.6f) * mainSquareLen - 1.0f, playerYLevel, 350.0f + (1 / 3.0f + 1 / 3.9f - 1 / 2.64f - 1 / 2.3f) * mainSquareLen - 1.0f), rot1, XMFLOAT3(mainSquareLen / 4, wallsHeight, 1.0f)}, //17
 									  { XMFLOAT3(-100.0f + (1 / 4.0f + 1 / 6.0f + 1 / 2.0f - 1 / 3.34f) * mainSquareLen - 1.0f, playerYLevel, 350.0f + (1 / 3.0f - 1 / 3.0f) * mainSquareLen), rot2, XMFLOAT3(mainSquareLen / 5, wallsHeight, 1.0f)}, //18
-									  { XMFLOAT3(-100.0f + mainSquareLen / 4 + mainSquareLen / 6, playerYLevel, 350.0f - mainSquareLen/3), rot1, XMFLOAT3(2*mainSquareLen / 3, wallsHeight, 1.0f)}, }; //19
+									  { XMFLOAT3(-100.0f + mainSquareLen / 4 + mainSquareLen / 6, playerYLevel, 350.0f - mainSquareLen/3), rot1, XMFLOAT3(2*mainSquareLen / 3, wallsHeight, 1.0f)}, //19
+									  { XMFLOAT3(-100.0f + mainSquareLen / 4 + mainSquareLen / 6, playerYLevel - wallsHeight, 350.0f - mainSquareLen / 3), rotPodloga, XMFLOAT3(1000.0f, 1000.0f, 1.0f)}, //podloga
+									  { XMFLOAT3(-100.0f + mainSquareLen / 4 + mainSquareLen / 6, wallsHeight, 350.0f - mainSquareLen / 3), rotPodloga, XMFLOAT3(1000.0f, 1000.0f, 1.0f)} }; //sufit
 
 const int sizeOf_walls = sizeof(walls) / sizeof(ModelOrganizerStruct);
 
