@@ -13,6 +13,7 @@ cbuffer LightBuffer
 {
 	float4 diffuseColor;
 	float3 lightDirection;
+	float4 surfaceColor;
 };
 
 
@@ -62,7 +63,7 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
 	//lightColor = saturate(lightIntensity);
 
 	// Multiply the texture pixel and the input color to get the final result.
-	lightColor = lightColor * blendColor;
+	lightColor = lightColor * blendColor * surfaceColor;
 	//lightColor = blendColor;
 	//lightColor = diffuseColor;
 	

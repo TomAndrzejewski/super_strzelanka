@@ -264,7 +264,8 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the light object.
-	m_Light->SetDirection(0.3f, 0.0f, 1.0f);
+	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light->SetDirection(0.5f, 0.5f, 0.0f);
 
 	// Create the model list object.
 	m_ModelList = new ModelListClass;
@@ -674,7 +675,7 @@ void GraphicsClass::RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMat
 
 		// Render the model using the light shader.
 		m_LightShader->Render(m_D3D->GetDeviceContext(), pEnemy->GetModel()->GetIndexCount(), worldMatrix, viewMatrix, m_D3D->GetProjectionMatrix(),
-			pEnemy->GetModel()->GetTextureArray(), m_Light->GetDirection(), color);
+			pEnemy->GetModel()->GetTextureArray(), m_Light->GetDirection(), m_Light->GetDiffuseColor(), color);
 	}
 }
 
@@ -695,7 +696,7 @@ void GraphicsClass::RenderWalls(vector<WallClass>& walls, vector<XMFLOAT4>& colo
 
 		// Render the model using the light shader.
 		m_LightShader->Render(m_D3D->GetDeviceContext(), pWall->GetModel()->GetIndexCount(), worldMatrix, viewMatrix, m_D3D->GetProjectionMatrix(),
-			pWall->GetModel()->GetTextureArray(), m_Light->GetDirection(), color);
+			pWall->GetModel()->GetTextureArray(), m_Light->GetDirection(), m_Light->GetDiffuseColor(), color);
 	}
 }
 
@@ -755,6 +756,6 @@ void GraphicsClass::RenderGun(XMMATRIX& viewMatrix)
 
 	//// Render the model using the light shader.
 	m_LightShader->Render(m_D3D->GetDeviceContext(), m_Gun.GetModel()->GetIndexCount(), m_Gun.GetModelToWorldMatrix(), viewMatrix, m_D3D->GetProjectionMatrix(),
-		m_Gun.GetModel()->GetTextureArray(), m_Light->GetDirection(), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+		m_Gun.GetModel()->GetTextureArray(), m_Light->GetDirection(), m_Light->GetDiffuseColor(), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	
 }
