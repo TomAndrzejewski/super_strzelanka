@@ -43,6 +43,7 @@ const WCHAR GUN1_TEXTURE_FILENAME[] = L"../Engine/data/gun1.dds";
 const WCHAR GUN2_TEXTURE_FILENAME[] = L"../Engine/data/gun3.dds";
 
 const WCHAR MENU_TEXTURE_FILENAME[] = L"../Engine/data/menuTexture.dds";
+const WCHAR AIM_TEXTURE_FILENAME[] = L"../Engine/data/aimTexture.dds";
 
 
 // SIMPLE CUBE ENEMY MODEL //
