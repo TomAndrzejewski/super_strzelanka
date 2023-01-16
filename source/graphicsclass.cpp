@@ -29,7 +29,8 @@ GraphicsClass::GraphicsClass()
 	m_Light = 0;
 	m_ModelList = 0;
 	m_Frustum = 0;
-	m_Bitmap = 0;
+	m_MenuBitmap = 0;
+	m_AimBitmap = 0;
 	m_TextureShader = 0;
 	m_GunModels[0] = 0;
 	m_GunModels[1] = 0;
@@ -48,6 +49,10 @@ GraphicsClass::~GraphicsClass()
 
 bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
+
+	m_ScreenWidth = screenWidth;
+	m_ScreenHeight = screenHeight;
+
 	bool result;
 	HRESULT hr;
 	XMMATRIX baseViewMatrix;
@@ -308,17 +313,31 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_batch = std::make_unique<PrimitiveBatch<VertexType>>(m_D3D->GetDeviceContext());
 
 	// Create the bitmap object.
-	m_Bitmap = new BitmapClass;
-	if (!m_Bitmap)
+	m_MenuBitmap = new BitmapClass;
+	if (!m_MenuBitmap)
 	{
 		return false;
 	}
 
 	// Initialize the bitmap object.
-	result = m_Bitmap->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), screenWidth, screenHeight, (WCHAR*)MENU_TEXTURE_FILENAME, screenWidth, screenHeight);
+	result = m_MenuBitmap->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), screenWidth, screenHeight, (WCHAR*)MENU_TEXTURE_FILENAME, 1920, 1080);
 	if (!result)
 	{
-		MessageBox(hwnd, L"Could not initialize the bitmap object.", L"Error", MB_OK);
+		MessageBox(hwnd, L"Could not initialize the menu bitmap object.", L"Error", MB_OK);
+		return false;
+	}
+
+	m_AimBitmap = new BitmapClass;
+	if (!m_AimBitmap)
+	{
+		return false;
+	}
+
+	// Initialize the bitmap object.
+	result = m_AimBitmap->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), screenWidth, screenHeight, (WCHAR*)AIM_TEXTURE_FILENAME, 32, 32);
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the aim bitmap object.", L"Error", MB_OK);
 		return false;
 	}
 
@@ -329,11 +348,18 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 void GraphicsClass::Shutdown()
 {
 	// Release the bitmap object.
-	if (m_Bitmap)
+	if (m_MenuBitmap)
 	{
-		m_Bitmap->Shutdown();
-		delete m_Bitmap;
-		m_Bitmap = 0;
+		m_MenuBitmap->Shutdown();
+		delete m_MenuBitmap;
+		m_MenuBitmap = 0;
+	}
+
+	if (m_AimBitmap)
+	{
+		m_AimBitmap->Shutdown();
+		delete m_AimBitmap;
+		m_AimBitmap = 0;
 	}
 
 	// Release the frustum object.
@@ -438,9 +464,10 @@ bool GraphicsClass::Render(PositionClass* positionClass, InputClass* inputClass)
 	// Clear the buffers to begin the scene.
 	m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
-
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
+
+	m_D3D->GetOrthoMatrix(orthoMatrix);
 
 	// Process player collision if on
 	viewMatrix = (playerCollisionON) ? ProcessPlayerCollision(positionClass) : m_Camera->GetViewMatrix();
@@ -471,7 +498,7 @@ bool GraphicsClass::Render(PositionClass* positionClass, InputClass* inputClass)
 		RenderCollisionBoxes();
 	}
 
-	RenderGun(viewMatrix);
+	RenderGun(viewMatrix, orthoMatrix, m_ScreenWidth, m_ScreenHeight);
 
 	m_D3D->EndScene();
 
@@ -496,14 +523,14 @@ bool GraphicsClass::RenderMenu(int activeOption)
 	m_D3D->TurnZBufferOff();
 
 	// Put the bitmap vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	result = m_Bitmap->Render(m_D3D->GetDeviceContext(), 0, 0);
+	result = m_MenuBitmap->Render(m_D3D->GetDeviceContext(), 0, 0);
 	if (!result)
 	{
 		return false;
 	}
 
 	// Render the bitmap with the texture shader.
-	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_Bitmap->GetIndexCount(), m_D3D->GetWorldMatrix(), viewMatrix, orthoMatrix, m_Bitmap->GetTexture());
+	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_MenuBitmap->GetIndexCount(), m_D3D->GetWorldMatrix(), viewMatrix, orthoMatrix, m_MenuBitmap->GetTexture());
 	if (!result)
 	{
 		return false;
@@ -516,16 +543,6 @@ bool GraphicsClass::RenderMenu(int activeOption)
 	{
 		return false;
 	}
-
-	//for (int i = 0; i < textDatasLength; i++)
-	//{
-	//	result = RenderText(textDatas[i]);
-	//	if (!result)
-	//	{
-	//		return false;
-	//	}
-	//}
-
 
 	// Turn off alpha blending after rendering the text.
 	m_D3D->TurnOffAlphaBlending();
@@ -743,7 +760,7 @@ void GraphicsClass::SetWireFrame(bool on)
 		m_D3D->GetDeviceContext()->RSSetState(m_states->CullCounterClockwise());
 }
 
-void GraphicsClass::RenderGun(XMMATRIX& viewMatrix)
+void GraphicsClass::RenderGun(XMMATRIX& viewMatrix, XMMATRIX& orthoMatrix, int screenW, int screenH)
 {
 	// Get player position and rotation
 	XMFLOAT3 playerPos, playerRot, posOffset;
@@ -758,4 +775,23 @@ void GraphicsClass::RenderGun(XMMATRIX& viewMatrix)
 	m_LightShader->Render(m_D3D->GetDeviceContext(), m_Gun.GetModel()->GetIndexCount(), m_Gun.GetModelToWorldMatrix(), viewMatrix, m_D3D->GetProjectionMatrix(),
 		m_Gun.GetModel()->GetTextureArray(), m_Light->GetDirection(), m_Light->GetDiffuseColor(), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	
+
+	//render aim
+	m_D3D->TurnOnAlphaBlending();
+	// Turn off the Z buffer to begin all 2D rendering.
+	m_D3D->TurnZBufferOff();
+
+	// Put the bitmap vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	m_AimBitmap->Render(m_D3D->GetDeviceContext(), (screenW - m_AimBitmap->GetBitmapWidth()) / 2, (screenH - m_AimBitmap->GetBitmapHeight()) / 2);
+
+
+	// Render the bitmap with the texture shader.
+	m_TextureShader->Render(m_D3D->GetDeviceContext(), m_AimBitmap->GetIndexCount(), m_Gun.GetModelToWorldMatrix(), viewMatrix, orthoMatrix, m_AimBitmap->GetTexture());
+
+	// Turn off alpha blending after rendering the text.
+	m_D3D->TurnOffAlphaBlending();
+
+	// Turn the Z buffer back on now that all 2D rendering has completed.
+	m_D3D->TurnZBufferOn();
+
 }

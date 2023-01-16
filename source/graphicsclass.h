@@ -85,7 +85,7 @@ public:
 	void RenderWalls(vector<WallClass>& walls, vector<XMFLOAT4>& colorsOfWalls, XMMATRIX& viewMatrix);
 	void RenderCollisionBoxes();
 	void SetWireFrame(bool);
-	void RenderGun(XMMATRIX& viewMatrix);
+	void RenderGun(XMMATRIX& viewMatrix, XMMATRIX& orthoMatrix, int screenW, int screenH);
 	XMMATRIX& ProcessPlayerCollision(PositionClass* positionClass);
 	void SetCurrentGun(int);
 
@@ -106,8 +106,10 @@ private:
 	PlayerClass m_Player;
 	BBoxCollisionClass m_EndingAreaBBox;
 	GunClass m_Gun;
-	BitmapClass* m_Bitmap;
+	BitmapClass* m_MenuBitmap;
+	BitmapClass* m_AimBitmap;
 	TextureShaderClass* m_TextureShader;
+	int m_ScreenWidth, m_ScreenHeight;
 
 	std::unique_ptr<DirectX::CommonStates> m_states;
 	std::unique_ptr<DirectX::BasicEffect> m_effect;
