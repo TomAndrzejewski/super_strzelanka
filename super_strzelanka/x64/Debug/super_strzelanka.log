@@ -1,3 +1,10 @@
-﻿  lightshaderclass.cpp
-C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\lightshaderclass.cpp(309,42): warning C4244: '=': conversion from 'SIZE_T' to 'unsigned long', possible loss of data
+﻿  graphicsclass.cpp
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(147,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(147,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(147,41): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(462,7): warning C4101: 'result': unreferenced local variable
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(459,36): warning C4101: 'projectionMatrix': unreferenced local variable
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(459,11): warning C4101: 'worldMatrix': unreferenced local variable
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(461,11): warning C4101: 'color': unreferenced local variable
+C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\source\graphicsclass.cpp(768,33): warning C4101: 'posOffset': unreferenced local variable
   super_strzelanka.vcxproj -> C:\Informatyka magisterka\SEM 2\PWAG\Prodzekt\super_strzelanka\x64\Debug\super_strzelanka.exe

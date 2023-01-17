@@ -34,6 +34,7 @@ GraphicsClass::GraphicsClass()
 	m_TextureShader = 0;
 	m_GunModels[0] = 0;
 	m_GunModels[1] = 0;
+	m_PlayerFinishedPlaythrough = false;
 }
 
 
@@ -451,7 +452,7 @@ bool GraphicsClass::Frame(float rotationY, float rotationX, float positionZ, flo
 	return true;
 }
 
-bool GraphicsClass::Render(PositionClass* positionClass, InputClass* inputClass)
+bool GraphicsClass::Render(PositionClass* positionClass, InputClass* inputClass, ScoreLogClass* scoreLog)
 {
 	static auto start = std::chrono::high_resolution_clock::now();
 
@@ -654,6 +655,7 @@ XMMATRIX& GraphicsClass::ProcessPlayerCollision(PositionClass* positionClass)
 	// Check if player get to ending position
 	if (m_Player.CheckIntersection(m_EndingAreaBBox.GetBoundingOrientedBox()) && m_Player.HowManyEnemiesKilled() >= sizeOf_enemies)
 	{
+		m_PlayerFinishedPlaythrough = true;
 		m_Camera->SetPosition(startPos.x, startPos.y, startPos.z);
 		m_Camera->SetRotation(startRot.x, startRot.y, startRot.z);
 		positionClass->SetPosition(startPos.x, startPos.z);
@@ -678,7 +680,7 @@ void GraphicsClass::RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMat
 		EnemyClass* pEnemy = &enemies.at(index);
 		if (pEnemy->GetEnemyState() == PlayerShootEnemyEnum)
 		{
-			color = XMFLOAT4(0.0f, 0.0f, 1.0f, 0.0f); // blue
+			continue; // do not render enemy that has been shoot
 		}
 		else
 		{
@@ -794,4 +796,20 @@ void GraphicsClass::RenderGun(XMMATRIX& viewMatrix, XMMATRIX& orthoMatrix, int s
 	// Turn the Z buffer back on now that all 2D rendering has completed.
 	m_D3D->TurnZBufferOn();
 
+}
+
+bool GraphicsClass::DidPlayerFinishPlaythrough()
+{
+	return m_PlayerFinishedPlaythrough;
+}
+
+void GraphicsClass::PrepareForNewPlaythrough()
+{
+	m_PlayerFinishedPlaythrough = false;
+	m_Player.RestartKilledEnemiesCounter();
+
+	for (auto& enemy : m_EnemyList)
+	{
+		enemy.PlayerRestarted();
+	}
 }

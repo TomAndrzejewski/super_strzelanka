@@ -17,10 +17,10 @@ void GameFlowClass::StartShootingPhase(vector<EnemyClass>& enemies)
 		return;
 	}
 
-	for (vector<EnemyClass>::iterator it = enemies.begin(); it != enemies.end(); it++)
-	{
-		it->PlayerStarted();
-	}
+	//for (vector<EnemyClass>::iterator it = enemies.begin(); it != enemies.end(); it++)
+	//{
+	//	it->PlayerStarted();
+	//}
 }
 
 GameState GameFlowClass::GetGameState()

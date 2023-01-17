@@ -43,6 +43,6 @@ void EnemyClass::PlayerRestarted()
 {
 	if (m_EnemyState == PlayerShootEnemyEnum)
 	{
-		m_EnemyState = PlayerNotStartedEnum;
+		m_EnemyState = PlayerStartedEnum;
 	}
 }

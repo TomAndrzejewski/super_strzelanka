@@ -11,6 +11,7 @@ SystemClass::SystemClass()
 	m_Timer = 0;
 	m_Position = 0;
 	m_GameFlow = 0;
+	m_ScoreLog = 0;
 }
 
 
@@ -94,6 +95,17 @@ bool SystemClass::Initialize()
 		return false;
 	}
 
+	m_ScoreLog = new ScoreLogClass;
+	if (!m_ScoreLog)
+	{
+		return false;
+	}
+
+	if (!(m_ScoreLog->ReadSavedScoreboard(SCOREBOARD_FILENAME)))
+	{
+		OutputDebugStringA("SCOREBOARD NOT LOADED\n");
+	}
+
 	return true;
 }
 
@@ -134,6 +146,12 @@ void SystemClass::Shutdown()
 	{
 		delete m_GameFlow;
 		m_GameFlow = 0;
+	}
+
+	if (m_ScoreLog)
+	{
+		delete m_ScoreLog;
+		m_ScoreLog = 0;
 	}
 
 	// Shutdown the window.
@@ -192,6 +210,10 @@ void SystemClass::Run()
 
 bool SystemClass::Frame()
 {
+	static bool firstPlaythrough = true;
+	static bool playthroughStarted = false;
+
+	static auto startTime = std::chrono::high_resolution_clock::now();
 	bool keyDown, result;
 	float rotationY, rotationX;
 	float positionZ, positionX;
@@ -210,6 +232,24 @@ bool SystemClass::Frame()
 
 	if (m_GameFlow->GetGameState() == InitialMenu)
 	{
+		if (playthroughStarted)
+		{
+			playthroughStarted = false;
+
+			auto finishTime = std::chrono::high_resolution_clock::now();
+			std::chrono::duration<double> elapsed = finishTime - startTime;
+			m_ScoreLog->AddScore(elapsed.count());
+
+			vector<double> bestScores;
+			int numOfReturnedScores = m_ScoreLog->GetBestScores(NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW, bestScores);
+			m_ScoreLog->SaveScoreboard(SCOREBOARD_FILENAME, bestScores);
+		}
+
+		vector<double> bestScores;
+		int numOfReturnedScores = m_ScoreLog->GetBestScores(NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW, bestScores);
+		// TUTAJ MOZESZ SOBIE WZIAC bestScores O ROZMIARZE numOfReturnedScores I JE WYPISAC NA EKRANIE
+
+
 		keyDown = m_Input->IsWPressed();
 		if (keyDown)
 			m_CurrentOption--;
@@ -247,6 +287,12 @@ bool SystemClass::Frame()
 	}
 	else
 	{
+		if (!playthroughStarted)
+		{
+			playthroughStarted = true;
+			startTime = std::chrono::high_resolution_clock::now();
+		}
+
 		keyDown = m_Input->Is1Pressed();
 		if (keyDown)
 		{
@@ -291,10 +337,17 @@ bool SystemClass::Frame()
 		}
 
 		// Finally render the graphics to the screen.
-		result = m_Graphics->Render(m_Position, m_Input);
+		result = m_Graphics->Render(m_Position, m_Input, m_ScoreLog);
 		if (!result)
 		{
 			return false;
+		}
+
+		if (m_Graphics->DidPlayerFinishPlaythrough())
+		{
+
+			m_GameFlow->m_GameState = InitialMenu;
+			m_Graphics->PrepareForNewPlaythrough();
 		}
 	}
 	

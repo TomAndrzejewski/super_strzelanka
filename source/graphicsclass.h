@@ -10,7 +10,7 @@
 /////////////
 // GLOBALS //
 /////////////
-const bool FULL_SCREEN = false;
+const bool FULL_SCREEN = true;
 const bool VSYNC_ENABLED = true;
 const float SCREEN_DEPTH = 1000.0f;
 const float SCREEN_NEAR = 0.1f;
@@ -23,7 +23,6 @@ const float SCREEN_NEAR = 0.1f;
 #include "cameraclass.h"
 #include "textclass.h"
 #include "bitmapclass.h"
-#include "SimpleModelClass.h"
 #include "lightshaderclass.h"
 #include "lightclass.h"
 #include "modellistclass.h"
@@ -37,6 +36,7 @@ const float SCREEN_NEAR = 0.1f;
 #include "CommonTypes.h"
 #include "multitexturemodelclass.h"
 #include "inputclass.h"
+#include "ScoreLogClass.h"
 
 #include <debugapi.h>
 #include "BufferHelpers.h"
@@ -77,7 +77,7 @@ public:
 	bool Initialize(int, int, HWND);
 	void Shutdown();
 	bool Frame(float, float, float, float);
-	bool Render(PositionClass* positionClass, InputClass* inputClass);
+	bool Render(PositionClass* positionClass, InputClass* inputClass, ScoreLogClass* scoreLog);
 	bool RenderMenu(int);
 
 	void ProcessShootingCollision();
@@ -88,6 +88,8 @@ public:
 	void RenderGun(XMMATRIX& viewMatrix, XMMATRIX& orthoMatrix, int screenW, int screenH);
 	XMMATRIX& ProcessPlayerCollision(PositionClass* positionClass);
 	void SetCurrentGun(int);
+	bool DidPlayerFinishPlaythrough();
+	void PrepareForNewPlaythrough();
 
 private:
 	D3DClass* m_D3D;
@@ -110,6 +112,7 @@ private:
 	BitmapClass* m_AimBitmap;
 	TextureShaderClass* m_TextureShader;
 	int m_ScreenWidth, m_ScreenHeight;
+	bool m_PlayerFinishedPlaythrough;
 
 	std::unique_ptr<DirectX::CommonStates> m_states;
 	std::unique_ptr<DirectX::BasicEffect> m_effect;

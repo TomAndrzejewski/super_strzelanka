@@ -25,6 +25,7 @@
 #include "timerclass.h"
 #include "positionclass.h"
 #include "GameFlowClass.h"
+#include "ScoreLogClass.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -58,6 +59,7 @@ private:
 	TimerClass* m_Timer;
 	PositionClass* m_Position;
 	GameFlowClass* m_GameFlow;
+	ScoreLogClass* m_ScoreLog;
 
 	int m_CurrentOption;
 };

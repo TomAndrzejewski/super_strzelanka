@@ -45,6 +45,10 @@ const WCHAR GUN2_TEXTURE_FILENAME[] = L"../Engine/data/gun3.dds";
 const WCHAR MENU_TEXTURE_FILENAME[] = L"../Engine/data/menuTexture.dds";
 const WCHAR AIM_TEXTURE_FILENAME[] = L"../Engine/data/aimTexture.dds";
 
+const char SCOREBOARD_FILENAME[] = "../Engine/data/scoreboard.txt";
+
+const int NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW = 3;
+
 
 // SIMPLE CUBE ENEMY MODEL //
 #define SIMPLE_CUBE_ENEMY_NUMBER		10

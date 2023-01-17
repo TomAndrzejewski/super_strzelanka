@@ -48,9 +48,6 @@
     <ClCompile Include="..\source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\SimpleModelClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\modellistclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,9 +78,6 @@
     <ClCompile Include="..\source\WallClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\IModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\ModelToWorldClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,9 +96,6 @@
     <ClCompile Include="..\source\GunClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\ObjLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\bitmapclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -115,6 +106,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\source\multitexturemodelclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ScoreLogClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -144,9 +138,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\source\lightshaderclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\SimpleModelClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\source\modellistclass.h">
@@ -182,9 +173,6 @@
     <ClInclude Include="..\source\WallClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\IModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\ModelToWorldClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -206,9 +194,6 @@
     <ClInclude Include="..\source\GunClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\ObjLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\bitmapclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -218,10 +203,10 @@
     <ClInclude Include="..\source\texturearrayclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\MultiTextureModel.h">
+    <ClInclude Include="..\source\multitexturemodelclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\multitexturemodelclass.h">
+    <ClInclude Include="..\source\ScoreLogClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
