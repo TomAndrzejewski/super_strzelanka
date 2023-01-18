@@ -10,8 +10,17 @@ TextClass::TextClass()
 	m_Font = 0;
 	m_FontShader = 0;
 	m_sentence1 = 0;
-	m_menuSentences[0] = 0;
-	m_menuSentences[1] = 0;
+
+	for (int i = 0; i < menuOptionsNo; i++)
+	{
+		m_GunSentences[i] = 0;
+	}
+
+	for (int i = 0; i < NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW; i++)
+	{
+		m_ScoreSentences[i] = 0;
+	}
+
 }
 
 
@@ -84,31 +93,29 @@ bool TextClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 	//}
 
 	// Initialize the first sentence.
-	result = InitializeSentence(&m_menuSentences[0], 32, device);
-	if (!result)
+
+	for (int i = 0; i < menuOptionsNo; i++)
 	{
-		return false;
+		result = InitializeSentence(&m_GunSentences[i], 32, device);
+		if (!result)
+		{
+			return false;
+		}
+
+		result = UpdateSentence(m_GunSentences[i], (char*)("PLAY WITH GUN " + std::to_string(i+1)).c_str(), screenWidth / 2 + m_OptionsStartPos.x, screenHeight / 2 + m_OptionsStartPos.y + m_verticalSpacing * i, 1.0f, 1.0f, 1.0f, deviceContext);
+		if (!result)
+		{
+			return false;
+		}
 	}
 
-	// Now update the sentence vertex buffer with the new string information.
-	result = UpdateSentence(m_menuSentences[0], (char*)"GUN 1", screenWidth/2, 100, 1.0f, 1.0f, 1.0f, deviceContext);
-	if (!result)
+	for (int i = 0; i < NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW; i++)
 	{
-		return false;
-	}
-
-	// Initialize the first sentence.
-	result = InitializeSentence(&m_menuSentences[1], 32, device);
-	if (!result)
-	{
-		return false;
-	}
-
-	// Now update the sentence vertex buffer with the new string information.
-	result = UpdateSentence(m_menuSentences[1], (char*)"GUN 2", screenWidth / 2, 150, 1.0f, 1.0f, 1.0f, deviceContext);
-	if (!result)
-	{
-		return false;
+		result = InitializeSentence(&m_ScoreSentences[i], 32, device);
+		if (!result)
+		{
+			return false;
+		}
 	}
 
 	return true;
@@ -117,10 +124,15 @@ bool TextClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 
 void TextClass::Shutdown()
 {
-	// Release the first sentence.
-	//ReleaseSentence(&m_sentence1);
-	ReleaseSentence(&m_menuSentences[0]);
-	ReleaseSentence(&m_menuSentences[1]);
+	for (int i = 0; i < menuOptionsNo; i++)
+	{
+		ReleaseSentence(&m_GunSentences[i]);
+	}
+
+	for (int i = 0; i < NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW; i++)
+	{
+		ReleaseSentence(&m_ScoreSentences[i]);
+	}
 
 	// Release the font shader object.
 	if(m_FontShader)
@@ -154,16 +166,22 @@ bool TextClass::Render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix,
 	//	return false;
 	//}
 
-	result = RenderSentence(deviceContext, m_menuSentences[0], worldMatrix, orthoMatrix);
-	if (!result)
+	for (int i = 0; i < menuOptionsNo; i++)
 	{
-		return false;
+		result = RenderSentence(deviceContext, m_GunSentences[i], worldMatrix, orthoMatrix);
+		if (!result)
+		{
+			return false;
+		}
 	}
 
-	result = RenderSentence(deviceContext, m_menuSentences[1], worldMatrix, orthoMatrix);
-	if (!result)
+	for (int i = 0; i < NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW; i++)
 	{
-		return false;
+		result = RenderSentence(deviceContext, m_ScoreSentences[i], worldMatrix, orthoMatrix);
+		if (!result)
+		{
+			return false;
+		}
 	}
 
 	return true;
@@ -403,7 +421,6 @@ bool TextClass::RenderSentence(ID3D11DeviceContext* deviceContext, SentenceType*
 	return true;
 }
 
-
 bool TextClass::SetRenderCount(int count, ID3D11DeviceContext* deviceContext)
 {
 	char tempString[32];
@@ -432,11 +449,29 @@ void TextClass::SetActiveMenuOption(int index)
 {
 	for (int i = 0; i < menuOptionsNo; i++)
 	{
-		m_menuSentences[i]->red = 1.0f;
-		m_menuSentences[i]->green = 1.0f;
-		m_menuSentences[i]->blue = 1.0f;
+		m_GunSentences[i]->red = 1.0f;
+		m_GunSentences[i]->green = 1.0f;
+		m_GunSentences[i]->blue = 1.0f;
 	}
-	m_menuSentences[index]->red = 1.0f;
-	m_menuSentences[index]->green = 1.0f;
-	m_menuSentences[index]->blue = 0.0f;
+	m_GunSentences[index]->red = 1.0f;
+	m_GunSentences[index]->green = 1.0f;
+	m_GunSentences[index]->blue = 0.0f;
 }
+
+bool TextClass::SetBestScores(std::vector<double> scores, ID3D11DeviceContext* deviceContext, int screenWidth, int screenHeight)
+{
+	bool result;
+	for (int i = 0; i < NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW; i++)
+	{
+		string text = "SCORE " + std::to_string(i + 1) + "      " + std::to_string(scores[i]) + " SECONDS";
+		result = UpdateSentence(m_ScoreSentences[i], (char*)(text).c_str(), screenWidth / 2 + m_ScoresStartPos.x, screenHeight / 2 + m_ScoresStartPos.y + m_verticalSpacing * i, 1.0f, 1.0f, 1.0f, deviceContext);
+		if (!result)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+
+

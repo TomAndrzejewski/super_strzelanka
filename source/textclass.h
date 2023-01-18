@@ -42,6 +42,7 @@ public:
 
 	bool SetRenderCount(int, ID3D11DeviceContext*);
 	void SetActiveMenuOption(int);
+	bool SetBestScores(std::vector<double>, ID3D11DeviceContext*, int, int);
 
 private:
 	bool InitializeSentence(SentenceType**, int, ID3D11Device*);
@@ -55,7 +56,11 @@ private:
 	int m_screenWidth, m_screenHeight;
 	XMMATRIX m_baseViewMatrix;
 	SentenceType* m_sentence1;
-	SentenceType* m_menuSentences[menuOptionsNo];
+	SentenceType* m_GunSentences[menuOptionsNo];
+	SentenceType* m_ScoreSentences[NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW];
+	const XMINT2 m_OptionsStartPos = XMINT2(-51, -150);
+	const XMINT2 m_ScoresStartPos = XMINT2(-96, 50);
+	const int m_verticalSpacing = 50;
 };
 
 #endif

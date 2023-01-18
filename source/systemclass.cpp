@@ -247,8 +247,6 @@ bool SystemClass::Frame()
 
 		vector<double> bestScores;
 		int numOfReturnedScores = m_ScoreLog->GetBestScores(NUMBER_OF_BEST_SCORES_TO_SAVE_AND_SHOW, bestScores);
-		// TUTAJ MOZESZ SOBIE WZIAC bestScores O ROZMIARZE numOfReturnedScores I JE WYPISAC NA EKRANIE
-
 
 		keyDown = m_Input->IsWPressed();
 		if (keyDown)
@@ -279,7 +277,7 @@ bool SystemClass::Frame()
 			return false;
 		}
 
-		bool result = m_Graphics->RenderMenu(m_CurrentOption);
+		bool result = m_Graphics->RenderMenu(m_CurrentOption, bestScores);
 		if (!result)
 		{
 			return false;

@@ -182,7 +182,7 @@ void FontClass::BuildVertexArray(void* vertices, char* sentence, float drawX, fl
 		// If the letter is a space then just move over three pixels.
 		if(letter == 0)
 		{
-			drawX = drawX + 3.0f;
+			drawX = drawX + 5.0f;
 		}
 		else
 		{

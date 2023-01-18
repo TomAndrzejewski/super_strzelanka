@@ -78,7 +78,7 @@ public:
 	void Shutdown();
 	bool Frame(float, float, float, float);
 	bool Render(PositionClass* positionClass, InputClass* inputClass, ScoreLogClass* scoreLog);
-	bool RenderMenu(int);
+	bool RenderMenu(int, std::vector<double>);
 
 	void ProcessShootingCollision();
 	void RenderEnemies(vector<EnemyClass>& enemies, XMMATRIX& viewMatrix);

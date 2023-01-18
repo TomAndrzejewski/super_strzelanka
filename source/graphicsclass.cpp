@@ -506,7 +506,7 @@ bool GraphicsClass::Render(PositionClass* positionClass, InputClass* inputClass,
 	return true;
 }
 
-bool GraphicsClass::RenderMenu(int activeOption)
+bool GraphicsClass::RenderMenu(int activeOption, vector<double> bestScores)
 {
 	XMMATRIX orthoMatrix, viewMatrix;
 	bool result;
@@ -538,6 +538,7 @@ bool GraphicsClass::RenderMenu(int activeOption)
 	}
 
 	m_Text->SetActiveMenuOption(activeOption);
+	m_Text->SetBestScores(bestScores, m_D3D->GetDeviceContext(), m_ScreenWidth, m_ScreenHeight);
 
 	result = RenderText();
 	if (!result)
