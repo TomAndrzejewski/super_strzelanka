@@ -146,11 +146,11 @@ void PositionClass::MoveForward(bool keydown)
 {
 	if (keydown)
 	{
-		m_forwardMoveSpeed += m_frameTime * 0.01f;
+		m_forwardMoveSpeed += m_frameTime * 0.05f;
 
-		if (m_forwardMoveSpeed > (m_frameTime * 0.10f))
+		if (m_forwardMoveSpeed > (m_frameTime * 0.18f))
 		{
-			m_forwardMoveSpeed = m_frameTime * 0.10f;
+			m_forwardMoveSpeed = m_frameTime * 0.18f;
 		}
 		
 		// takie proste a tyle czasu zjadlo :(((
