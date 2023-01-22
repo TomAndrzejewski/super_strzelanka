@@ -100,8 +100,8 @@ private:
 	MultiTextureModelClass* m_WallModel;
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;
-	ModelListClass* m_ModelList;
-	FrustumClass* m_Frustum;
+	//ModelListClass* m_ModelList;
+	//FrustumClass* m_Frustum;
 	vector<EnemyClass> m_EnemyList;
 	vector<WallClass> m_WallList;
 	vector<XMFLOAT4> m_WallColors;

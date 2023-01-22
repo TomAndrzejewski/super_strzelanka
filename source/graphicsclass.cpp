@@ -27,8 +27,8 @@ GraphicsClass::GraphicsClass()
 	m_WallModel = 0;
 	m_LightShader = 0;
 	m_Light = 0;
-	m_ModelList = 0;
-	m_Frustum = 0;
+	//m_ModelList = 0;
+	//m_Frustum = 0;
 	m_MenuBitmap = 0;
 	m_AimBitmap = 0;
 	m_TextureShader = 0;
@@ -274,26 +274,26 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Light->SetDirection(0.5f, 0.5f, 0.0f);
 
 	// Create the model list object.
-	m_ModelList = new ModelListClass;
-	if(!m_ModelList)
-	{
-		return false;
-	}
+	//m_ModelList = new ModelListClass;
+	//if(!m_ModelList)
+	//{
+	//	return false;
+	//}
 
 	// Initialize the model list object.
-	result = m_ModelList->Initialize(25);
-	if(!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the model list object.", L"Error", MB_OK);
-		return false;
-	}
+	//result = m_ModelList->Initialize(25);
+	//if(!result)
+	//{
+	//	MessageBox(hwnd, L"Could not initialize the model list object.", L"Error", MB_OK);
+	//	return false;
+	//}
 
 	// Create the frustum object.
-	m_Frustum = new FrustumClass;
-	if(!m_Frustum)
-	{
-		return false;
-	}
+	//m_Frustum = new FrustumClass;
+	//if(!m_Frustum)
+	//{
+	//	return false;
+	//}
 
 	// Ending position BBox initialization
 	m_EndingAreaBBox.SetBoundingBox(XMFLOAT3(-100.0f + (1 / 4.0f + 1 / 6.0f + 1 / 2.0f - 1 / 3.34f - 1 / (mainSquareLen / 5)) * mainSquareLen - 1.0f, playerYLevel, 350.0f + (1 / 3.0f - 1 / 3.0f) * mainSquareLen - mainSquareLen / 8), XMFLOAT3(mainSquareLen / 5.8f, wallsHeight, mainSquareLen / 8), XMFLOAT3(0.0f, 0.0f, 0.0f));
@@ -363,20 +363,20 @@ void GraphicsClass::Shutdown()
 		m_AimBitmap = 0;
 	}
 
-	// Release the frustum object.
-	if(m_Frustum)
-	{
-		delete m_Frustum;
-		m_Frustum = 0;
-	}
+	//// Release the frustum object.
+	//if(m_Frustum)
+	//{
+	//	delete m_Frustum;
+	//	m_Frustum = 0;
+	//}
 
-	// Release the model list object.
-	if(m_ModelList)
-	{
-		m_ModelList->Shutdown();
-		delete m_ModelList;
-		m_ModelList = 0;
-	}
+	//// Release the model list object.
+	//if(m_ModelList)
+	//{
+	//	m_ModelList->Shutdown();
+	//	delete m_ModelList;
+	//	m_ModelList = 0;
+	//}
 
 	// Release the light object.
 	if(m_Light)

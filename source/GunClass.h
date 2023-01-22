@@ -1,9 +1,9 @@
 #pragma once
-#include "ModelToWorldClass.h"
 
 #include <d3d11.h>
 #include <SimpleMath.h>
 #include "MultiTextureModelClass.h"
+#include "ModelToWorldClass.h"
 
 
 class GunClass : public ModelToWorldClass
